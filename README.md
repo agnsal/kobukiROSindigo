@@ -23,8 +23,6 @@ A kobuki robot ROS package (for both Gazebo and physical robot).
   rm -r kobukiROSindigo 
 5. **To build the scripts:** \
   cd scripts \
-  chmod +x senseNode.py
-  cd ~/catkin_ws
-  catkin_make
+  chmod +x senseNode.py 
 6. **To run the scripts:** \
   rosrun kobukiROSindigo senseNode.py
