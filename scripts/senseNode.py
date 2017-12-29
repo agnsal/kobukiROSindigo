@@ -4,8 +4,8 @@ import rospy
 from nav_msgs.msg import Odometry
 
 def odomCallback(data):
-    x = msg.pose.pose.position.x
-    y = msg.pose.pose.position.y
+    x = data.pose.pose.position.x
+    y = data.pose.pose.position.y
     rospy.loginfo('x: {}, y: {}'.format(x, y))
 
 def main():
