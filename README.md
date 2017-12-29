@@ -19,5 +19,5 @@ A kobuki robot ROS package (for both Gazebo and physical robot).
 4. **To import this code into the ROS package:** \
   mkdir scripts \
   git clone https://github.com/agnsal/kobukiROSindigo.git \
-  mv kobukiROSindigo/scripts/* . \
+  mv kobukiROSindigo/scripts/* scripts/ \
   rm -r kobukiROSindigo
