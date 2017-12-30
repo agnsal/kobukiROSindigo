@@ -52,7 +52,7 @@ def powerCallback(data):
         rospy.loginfo("WARN: Unexpected power system event: %d"%(data.event))
     rospy.loginfo('power: {}'.format(kobukiStatus.power))
 
-def main():
+def sense():
     rospy.init_node('sense')
     rospy.Subscriber("/odom", Odometry, odometryCallback)
     rospy.Subscriber("/mobile_base/events/power_system", PowerSystemEvent, powerCallback)
@@ -60,4 +60,7 @@ def main():
     rospy.spin()
   
 if __name__ == '__main__':
-    main()
+    try:
+        sense()
+    except rospy.ROSInterruptException:
+        pass
