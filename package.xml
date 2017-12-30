@@ -9,6 +9,11 @@
   <url type="website">http://wiki.ros.org/beginner_tutorials</url>
   <author email="agneses92@hotmail.it">Agnese Salutari</author>
   
+  <!-- Needed for message handling -->
+  <build_depend>message_generation</buildtool_depend>
+  <run_depend>message_runtime</run_depend>
+  <!-- /Needed for message handling -->
+  
   <buildtool_depend>catkin</buildtool_depend>
 
   <build_depend>roscpp</build_depend>
