@@ -1,7 +1,7 @@
 # kobukiROSindigo
 A kobuki robot ROS package (for both Gazebo and physical robot).
 
-##Instructions:
+## Instructions:
 1. **If you don't have a  catkin workspace, create one:** \
   mkdir -p ~/catkin_ws/src \
   cd ~/catkin_ws/src \
