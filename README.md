@@ -27,10 +27,10 @@ A kobuki robot ROS package (for both Gazebo and physical robot).
   catkin_create_pkg kobukiROSindigoMSG
   . ~/catkin_ws/devel/setup.bash
 6. **To import the code into the 2 new ROS packages:** \
-  cd ~/catkin_ws/src \
+  cd ~/catkin_ws \
   git clone https://github.com/agnsal/kobukiROSindigo.git \
-  mv kobukiROSindigo/src/* kobukiROSindigo/src/ \
-  mv kobukiROSindigo/msg/* kobukiROSindigoMSG/msg/ \
+  mv kobukiROSindigo/src/* src/kobukiROSindigo/src/ \
+  mv kobukiROSindigo/msg/* src/kobukiROSindigoMSG/msg/ \
   rm -r kobukiROSindigo 
 6. **To build the robot scripts:** \
   cd ~/catkin_ws/src/kobukiROSindigo/src \
