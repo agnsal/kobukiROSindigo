@@ -15,9 +15,9 @@ def odometryCallback(data):
     kobukiStatus.odometryZ = data.pose.pose.position.z
     rospy.loginfo('x: {}, y: {}, z: {}'.format(kobukiStatus.odometryX, kobukiStatus.odometryY, kobukiStatus.odometryZ))
     
-def bumperCallback(bumper):
-    state = bumper.state
-    bumper = bumper.bumper
+def bumperCallback(data):
+    state = data.state
+    bumper = data.bumper
     if bumper == 0:
         kobukiStatus.bumperW=state
     elif bumper == 1:
