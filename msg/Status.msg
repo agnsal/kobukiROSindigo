@@ -1,5 +1,6 @@
 float32 odometryX     # X position
 float32 odometryY     # Y position
+float32 odometryZ     # Z position
 bool bumperW     # left bumper
 bool bumperN    # front bumper
 bool bumperE    # right bumper
