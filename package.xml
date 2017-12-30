@@ -9,8 +9,8 @@
   <author email="agneses92@hotmail.it">Agnese Salutari</author>
   
   <!-- Needed for message management -->
-  <build_depend>message_generation</buildtool_depend>
-  <run_depend>message_runtime</run_depend>
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
   <!-- /Needed for message management -->
   
   <buildtool_depend>catkin</buildtool_depend>
