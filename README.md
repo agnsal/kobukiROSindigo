@@ -1,9 +1,6 @@
 # kobukiROSindigo
 A kobuki robot ROS package (for both Gazebo and physical robot).
 
-
-***WORK IN PROGRESS...***
-
 ##Instructions:
 1. **If you don't have a  catkin workspace, create one:** \
   mkdir -p ~/catkin_ws/src \
@@ -25,10 +22,10 @@ A kobuki robot ROS package (for both Gazebo and physical robot).
   cd ~/catkin_ws \
   git clone https://github.com/agnsal/kobukiROSindigo.git \
   mv kobukiROSindigo/src/* src/kobukiROSindigo/src/ \
-  mv kobukiROSindigo/msg/* src/kobukiROSindigoMSG/msg/ \
+  mv kobukiROSindigo/msg/* src/kobukiROSindigo/msg/ \
   rm src/kobukiROSindigo/package.xml \
   rm src/kobukiROSindigo/CMakeLists.txt \
-  mv kobukiROSindigo/papackage.xml src/kobukiROSindigo/ \
+  mv kobukiROSindigo/package.xml src/kobukiROSindigo/ \
   mv kobukiROSindigo/CMakeLists.txt src/kobukiROSindigo/ \
   rm -r kobukiROSindigo \
   catkin_make
