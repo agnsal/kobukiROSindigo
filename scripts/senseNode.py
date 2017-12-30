@@ -4,7 +4,7 @@ import rospy
 from nav_msgs.msg import Odometry
 from kobuki_msgs.msg import BumperEvent
 from kobuki_msgs.msg import PowerSystemEvent
-from kobuki_project.msg import Status
+from kobukiROSindigo.msg import Status
 
 publisher_status = rospy.Publisher('kobuki_status', Status, queue_size=1)
 kobukiStatus = Status()  # The updated status of the robot
