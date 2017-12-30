@@ -25,17 +25,15 @@ A kobuki robot ROS package (for both Gazebo and physical robot).
 5. **To create and build the ROS messages package:** \
   cd ~/catkin_ws/src \
   catkin_create_pkg kobukiROSindigoMSG
-  
-4. **To import this code into the ROS robot package:** \
+  . ~/catkin_ws/devel/setup.bash
+6. **To import the code into the 2 new ROS packages:** \
   cd ~/catkin_ws/src \
   git clone https://github.com/agnsal/kobukiROSindigo.git \
   mv kobukiROSindigo/src/* kobukiROSindigo/src/ \
   mv kobukiROSindigo/msg/* kobukiROSindigoMSG/msg/ \
   rm -r kobukiROSindigo 
-5. **To build the robot scripts:** \
-  cd src \
+6. **To build the robot scripts:** \
+  cd ~/catkin_ws/src/kobukiROSindigo/src \
   chmod +x senseNode.py 
-
-  
-6. **To run the scripts:** \
+7. **To run the scripts:** \
   rosrun kobukiROSindigo senseNode.py
