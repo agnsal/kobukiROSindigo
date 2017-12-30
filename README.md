@@ -13,6 +13,7 @@ A kobuki robot ROS package (for both Gazebo and physical robot).
 2. **To crate and build the ROS robot package into the workspace:** \
   cd ~/catkin_ws/src \
   catkin_create_pkg kobukiROSindigo std_msgs rospy roscpp \
+  mkdir kobukiROSindigo/src \
   cd ~/catkin_ws \
   catkin_make \
   . ~/catkin_ws/devel/setup.bash
@@ -25,6 +26,7 @@ A kobuki robot ROS package (for both Gazebo and physical robot).
 5. **To create and build the ROS messages package:** \
   cd ~/catkin_ws/src \
   catkin_create_pkg kobukiROSindigoMSG
+  mkdir kobukiROSindigoMSG/msg
   . ~/catkin_ws/devel/setup.bash
 6. **To import the code into the 2 new ROS packages:** \
   cd ~/catkin_ws \
