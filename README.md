@@ -14,26 +14,24 @@ A kobuki robot ROS package (for both Gazebo and physical robot).
   cd ~/catkin_ws/src \
   catkin_create_pkg kobukiROSindigo std_msgs rospy roscpp \
   mkdir kobukiROSindigo/src \
+  mkdir kobukiROSindigo/msg \
   cd ~/catkin_ws \
   catkin_make \
   . ~/catkin_ws/devel/setup.bash
 3. **To test it:** \
   roscd kobukiROSindigo \
   cat package.xml
-4. **(OPTIONAL) To change the dependencies or add a license, as you can see by the file package.xml in this repo:** \
-  roscd kobukiROSindigo \
-  vi package.xml
-5. **To create and build the ROS messages package:** \
-  cd ~/catkin_ws/src \
-  catkin_create_pkg kobukiROSindigoMSG
-  mkdir kobukiROSindigoMSG/msg
-  . ~/catkin_ws/devel/setup.bash
-6. **To import the code into the 2 new ROS packages:** \
+5. **To import the code into the ROS package and build all its dependencies:** \
   cd ~/catkin_ws \
   git clone https://github.com/agnsal/kobukiROSindigo.git \
   mv kobukiROSindigo/src/* src/kobukiROSindigo/src/ \
   mv kobukiROSindigo/msg/* src/kobukiROSindigoMSG/msg/ \
-  rm -r kobukiROSindigo 
+  rm src/kobukiROSindigo/package.xml \
+  rm src/kobukiROSindigo/CMakeLists.txt \
+  mv kobukiROSindigo/papackage.xml src/kobukiROSindigo/ \
+  mv kobukiROSindigo/CMakeLists.txt src/kobukiROSindigo/ \
+  rm -r kobukiROSindigo \
+  catkin_make
 6. **To build the robot scripts:** \
   cd ~/catkin_ws/src/kobukiROSindigo/src \
   chmod +x senseNode.py 
