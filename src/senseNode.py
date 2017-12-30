@@ -18,12 +18,15 @@ def odometryCallback(data):
 def bumperCallback(data):
     state = data.state
     bumper = data.bumper
+    kobukiStatus.bumperE = 0
+    kobukiStatus.bumperW = 0
+    kobukiStatus.bumperN = 0
     if bumper == 0:
-        kobukiStatus.bumperW=state
+        kobukiStatus.bumperW = state
     elif bumper == 1:
-        kobukiStatus.bumperN=state
+        kobukiStatus.bumperN = state
     else:   
-        kobukiStatus.bumperE=state
+        kobukiStatus.bumperE = state
     rospy.loginfo('bumperW: {}, bumberN: {}, bumperE: {}'.format(kobukiStatus.bumperW, kobukiStatus.bumperN, kobukiStatus.bumperE))
 
 def powerCallback(data):
