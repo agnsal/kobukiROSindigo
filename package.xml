@@ -8,10 +8,10 @@
   <license>BSD</license>
   <author email="agneses92@hotmail.it">Agnese Salutari</author>
   
-  <!-- Needed for message handling -->
+  <!-- Needed for message management -->
   <build_depend>message_generation</buildtool_depend>
   <run_depend>message_runtime</run_depend>
-  <!-- /Needed for message handling -->
+  <!-- /Needed for message management -->
   
   <buildtool_depend>catkin</buildtool_depend>
 
