@@ -2,11 +2,10 @@
 <package format="2">
   <name>beginner_tutorials</name>
   <version>0.1.0</version>
-  <description>The beginner_tutorials package</description>
+  <description>Kobuki robot code for Indigo ROS</description>
 
-  <maintainer email="you@yourdomain.tld">Your Name</maintainer>
+  <maintainer email="agneses92@hotmail.it">Agnese Salutari</maintainer>
   <license>BSD</license>
-  <url type="website">http://wiki.ros.org/beginner_tutorials</url>
   <author email="agneses92@hotmail.it">Agnese Salutari</author>
   
   <!-- Needed for message handling -->
