@@ -17,12 +17,11 @@ A kobuki robot ROS package (for both Gazebo and physical robot).
 3. **(OPTIONAL) To change the dependencies OR add a license, as you can see by the file package.xml in this repo:** \
   vi package.xml
 4. **To import this code into the ROS package:** \
-  mkdir scripts \
   git clone https://github.com/agnsal/kobukiROSindigo.git \
-  mv kobukiROSindigo/scripts/* scripts/ \
+  mv kobukiROSindigo/src/* src/ \
   rm -r kobukiROSindigo 
 5. **To build the scripts:** \
-  cd scripts \
+  cd src \
   chmod +x senseNode.py 
 6. **To run the scripts:** \
   rosrun kobukiROSindigo senseNode.py
