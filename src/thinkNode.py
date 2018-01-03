@@ -4,7 +4,8 @@ import rospy
 import math
 import time
 from pyswip import Prolog
-from kobuki_project.msg import Status
+from geometry_msgs.msg import Twist
+from kobukiROSindigo.msg import Status
 
 publisher_status = rospy.Publisher('kobuki_velocity', Twist, queue_size=1)
 kobukiStatus = Status() # The updated status of the robot
