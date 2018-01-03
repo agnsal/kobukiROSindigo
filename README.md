@@ -2,7 +2,7 @@
 A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Prolog to take decisions. 
 
 ## Instructions:
-1. **Install SWI-Prolog:** \
+1. **(OPZIONALE, DA ESEGUIRE SE CI SONO PROBLEMI CON SWI-PROLOG) Install SWI-Prolog with shared library enabled:** \
   apt-get install autoconf \
   git clone https://github.com/SWI-Prolog/swipl-devel.git \
   cd swipl-devel/package
