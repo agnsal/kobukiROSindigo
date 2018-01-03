@@ -15,7 +15,8 @@ A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Pr
   sudo ln -s /usr/lib/pl-5.6.34/lib/i686-linux/libpl.so.5.6.34 /usr/lib/libpl.so  \
 2. **Install the Python needed library:** \
   git clone https://github.com/yuce/pyswip.git \
-  tar xzvf pyswip
+  cd pyswip \
+  python setup.py install
 3. **If you don't have a  catkin workspace, create one:** \
   mkdir -p ~/catkin_ws/src \
   cd ~/catkin_ws/src \
