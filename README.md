@@ -34,10 +34,10 @@ A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Pr
   catkin_make  
 7. **To build the robot scripts:** \
   cd ~/catkin_ws/src/kobukiROSindigo/src \
-  chmod +x senseNode.py 
-  chmod +x thinkNode.py 
+  chmod +x senseNode.py \
+  chmod +x thinkNode.py \
   chmod +x actNode.py 
-8. **To run the scripts:** \
+8. **To run the scripts on the robot or on the simulation (that have to have been launched):** \
   rosrun kobukiROSindigo senseNode.py
   rosrun kobukiROSindigo thinkNode.py
   rosrun kobukiROSindigo actNode.py
