@@ -6,13 +6,14 @@ from kobuki_msgs.msg import BumperEvent
 from kobuki_msgs.msg import PowerSystemEvent
 from kobukiROSindigo.msg import Status
 
-publisher_status = rospy.Publisher('kobuki_status', Status, queue_size=1)
+pubKobukiStatus = rospy.Publisher('kobuki_status', Status, queue_size=1)
 kobukiStatus = Status()  # The updated status of the robot
 
 def odometryCallback(data):
     kobukiStatus.odometryX = data.pose.pose.position.x
     kobukiStatus.odometryY = data.pose.pose.position.y
     kobukiStatus.odometryZ = data.pose.pose.position.z
+    pubKobukiStatus.publish(kobukiStatus)
     rospy.loginfo('x: {}, y: {}, z: {}'.format(kobukiStatus.odometryX, kobukiStatus.odometryY, kobukiStatus.odometryZ))
     
 def bumperCallback(data):
@@ -27,6 +28,7 @@ def bumperCallback(data):
         kobukiStatus.bumperN = state
     else:   
         kobukiStatus.bumperE = state
+    pubKobukiStatus.publish(kobukiStatus)
     rospy.loginfo('bumperW: {}, bumberN: {}, bumperE: {}'.format(kobukiStatus.bumperW, kobukiStatus.bumperN, kobukiStatus.bumperE))
 
 def powerCallback(data):
@@ -50,6 +52,7 @@ def powerCallback(data):
         rospy.loginfo("Robot battery critical")
     else:
         rospy.loginfo("WARN: Unexpected power system event: %d"%(data.event))
+    pubKobukiStatus.publish(kobukiStatus)
     rospy.loginfo('power: {}'.format(kobukiStatus.power))
 
 def sense():
