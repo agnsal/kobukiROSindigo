@@ -3,9 +3,19 @@ A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Pr
 
 ## Instructions:
 1. **Install SWI-Prolog:** \
-  http://www.swi-prolog.org/
+  apt-get install autoconf \
+  git clone https://github.com/SWI-Prolog/swipl-devel.git \
+  cd swipl-devel/package
+  chmod u+x configure
+  **To configure the source with shared library enabled:** ./configure --prefix=/usr --enable-shared \
+  make \
+  sudo make install \
+  cd packages/clpqr \
+  ./configure --prefix=/usr --enable-shared $ make && sudo make install \
+  sudo ln -s /usr/lib/pl-5.6.34/lib/i686-linux/libpl.so.5.6.34 /usr/lib/libpl.so  \
 2. **Install the Python needed library:** \
-  pip install pyswip
+  git clone https://github.com/yuce/pyswip.git \
+  tar xzvf pyswip
 3. **If you don't have a  catkin workspace, create one:** \
   mkdir -p ~/catkin_ws/src \
   cd ~/catkin_ws/src \
@@ -38,6 +48,6 @@ A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Pr
   chmod +x thinkNode.py \
   chmod +x actNode.py 
 8. **To run the scripts on the robot or on the simulation (that have to have been launched):** \
-  rosrun kobukiROSindigo senseNode.py
-  rosrun kobukiROSindigo thinkNode.py
+  rosrun kobukiROSindigo senseNode.py \
+  rosrun kobukiROSindigo thinkNode.py \
   rosrun kobukiROSindigo actNode.py
