@@ -1,5 +1,5 @@
 # kobukiROSindigo
-A kobuki robot ROS package (for both Gazebo and physical robot).
+A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Prolog to take decisions. 
 
 ## Instructions:
 1. **Install SWI-Prolog:** \
@@ -39,3 +39,5 @@ A kobuki robot ROS package (for both Gazebo and physical robot).
   chmod +x actNode.py 
 8. **To run the scripts:** \
   rosrun kobukiROSindigo senseNode.py
+  rosrun kobukiROSindigo thinkNode.py
+  rosrun kobukiROSindigo actNode.py
