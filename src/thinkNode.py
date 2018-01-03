@@ -25,4 +25,4 @@ if __name__ == '__main__':
     try:
         think()
     except rospy.ROSInterruptException:
-pass
+        pass
