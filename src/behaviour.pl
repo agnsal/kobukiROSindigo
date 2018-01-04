@@ -8,7 +8,7 @@ takeDecision('GoStraight') :-
 takeDecision('TurnWest') :-
     hasValue('bumperW', 'False'), !.
 
-takeDecision('TurnEst') :-
+takeDecision('TurnEast') :-
     hasValue8('bumperE', 'False'), !.
   
 takeDecision('TurnSouth').
