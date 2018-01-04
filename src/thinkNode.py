@@ -3,6 +3,7 @@
 import rospy
 import math
 import time
+import random
 from pyswip import Prolog
 from geometry_msgs.msg import Twist
 from kobukiROSindigo.msg import Status
@@ -72,31 +73,37 @@ def decisionCallback(kobukiStatus):
 
 def decisionCallbackPy(kobukiStatus):
     print 'Decision taking started...'
-    west = kobukiStatus.bumperW
-    north = kobukiStatus.bumperN
-    east = kobukiStatus.bumperE
-    rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
-    if north is False:
-        kobukiDecisionVelocity.linear.x = 0.25  # Go forward at 0.25 m/s
-        kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = 0.0
-        pubKobukiVelocity.publish(kobukiDecisionVelocity)
-    elif east is False:
+    luck = random.randint(0,3)
+    if luck == 1:  #  Casual move
         kobukiDecisionVelocity.linear.x = -0.1
         kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
-    elif west is False:
-        kobukiDecisionVelocity.linear.x = -0.1
-        kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 1rad/s
-    elif (north and east and west):
-        kobukiDecisionVelocity.linear.x = -0.1 
-        kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
-    else:  # stay
-        kobukiDecisionVelocity.linear.x = 0.0
-        kobukiDecisionVelocity.linear.y = 0.0  
-        kobukiDecisionVelocity.angular.z = 0.0
+        kobukiDecisionVelocity.angular.z = luck*(-1.5)
+    else:
+        west = kobukiStatus.bumperW
+        north = kobukiStatus.bumperN
+        east = kobukiStatus.bumperE
+        rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
+        if north is False and east is False and west is False:
+            kobukiDecisionVelocity.linear.x = 0.25  # Go forward at 0.25 m/s
+            kobukiDecisionVelocity.linear.y = 0.0
+            kobukiDecisionVelocity.angular.z = 0.0
+            pubKobukiVelocity.publish(kobukiDecisionVelocity)
+        elif east is False:
+            kobukiDecisionVelocity.linear.x = -0.1
+            kobukiDecisionVelocity.linear.y = 0.0
+            kobukiDecisionVelocity.angular.z = -2.0  # Turn Right at 1 rad/s
+        elif west is False:
+            kobukiDecisionVelocity.linear.x = -0.1
+            kobukiDecisionVelocity.linear.y = 0.0
+            kobukiDecisionVelocity.angular.z = 2.0  # Turn Left at 1rad/s
+        elif (north and east and west):
+            kobukiDecisionVelocity.linear.x = -0.1 
+            kobukiDecisionVelocity.linear.y = 0.0
+            kobukiDecisionVelocity.angular.z = 8.0  # Turn Left at 4 rad/s
+        else:  # stay
+            kobukiDecisionVelocity.linear.x = 0.0
+            kobukiDecisionVelocity.linear.y = 0.0  
+            kobukiDecisionVelocity.angular.z = 0.0
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))
     
