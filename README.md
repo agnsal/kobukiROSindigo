@@ -8,7 +8,6 @@ A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Pr
   cd swipl-devel \
   chmode u+x prepare \
   ./prepare \
-  cd packages \
   chmod u+x configure \
   **To configure the source with shared library enabled:** ./configure --prefix=/usr --enable-shared \
   make \
