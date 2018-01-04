@@ -18,21 +18,21 @@ def learn(prologFilePath):
     :param prologFilePath: The path of the Prolog (.pl or .txt) file we need to use.
     :return:
     '''
-    rospy.loginfo('Learning started...')
+    print 'Learning started...'
     assert isinstance(prologFilePath, str)
     prologEngine.consult(prologFilePath)
-    rospy.loginfo('Learning finished')
+    print 'Learning finished'
 
 def decisionCallback(kobukiStatus):
-    rospy.loginfo('Decision taking started...')
+    print 'Decision taking started...'
     prologEngine.retractall('perceptionBumper(_)')
-    rospy.loginfo('Previous knowledge retracted...')
+    print 'Previous knowledge retracted...'
     west = kobukiStatus.bumperW
     north = kobukiStatus.bumperN
     est = kobukiStatus.bumperE
     perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', est]]
     prologEngine.assertz('perceptionBumper(' + str(perceptionBumper) + ')')
-    rospy.loginfo('New knowledge taken...')
+    print 'New knowledge taken...'
     rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, est))
     try:
         out = list(prologEngine.query('takeDecision(D)'))
