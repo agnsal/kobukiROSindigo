@@ -11,4 +11,4 @@ takeDecision('West') :-
 takeDecision('Est') :-
     hasValue8('bumperE', 'False'), !.
   
-takeDecision('South&Turn').
+takeDecision('South').
