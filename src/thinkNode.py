@@ -76,20 +76,20 @@ def decisionCallbackPy(kobukiStatus):
     north = kobukiStatus.bumperN
     east = kobukiStatus.bumperE
     rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
-    if north == 0:
+    if north is False:
         kobukiDecisionVelocity.linear.x = 0.25  # Go forward at 0.25 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 0.0
         pubKobukiVelocity.publish(kobukiDecisionVelocity)
-    elif east == 0:
+    elif east is False:
         kobukiDecisionVelocity.linear.x = -0.1
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
-    elif west == 0:
+    elif west is False:
         kobukiDecisionVelocity.linear.x = -0.1
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 1rad/s
-    elif (north == 1 and east == 1 and west == 1):
+    elif (north and east and west):
         kobukiDecisionVelocity.linear.x = -0.1 
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
