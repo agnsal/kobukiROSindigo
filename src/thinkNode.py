@@ -50,15 +50,15 @@ def decisionCallback(kobukiStatus):
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 0.0
     elif toDo == 'TurnEast':
-        kobukiDecisionVelocity.linear.x = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.linear.x = 0.0  # Go back at 0.25 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = -0.25  # Turn Right at 0.25 rad/s
     elif toDo == 'TurnWest':
-        kobukiDecisionVelocity.linear.x = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.linear.x = 0.0  # Go back at 0.25 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 0.25  # Turn Left at 0.25 rad/s
     elif toDo == 'TurnSouth':
-        kobukiDecisionVelocity.linear.x = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.linear.x = 0.0  # Go back at 0.25 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 0.25 rad/s
     else:  # toDo == 'Stay'
@@ -76,22 +76,23 @@ def decisionCallbackPy(kobukiStatus):
     north = kobukiStatus.bumperN
     east = kobukiStatus.bumperE
     rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
-    if north is False:
+    if north == 0:
         kobukiDecisionVelocity.linear.x = 0.25  # Go forward at 0.25 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 0.0
-    elif east is False:
-        kobukiDecisionVelocity.linear.x = -0.25  # Go back at 0.25 m/s
+        pubKobukiVelocity.publish(kobukiDecisionVelocity)
+    elif east == 0:
+        kobukiDecisionVelocity.linear.x = -0.1
         kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = -0.25  # Turn Right at 0.25 rad/s
-    elif west is False:
-        kobukiDecisionVelocity.linear.x = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
+    elif west == 0:
+        kobukiDecisionVelocity.linear.x = -0.1
         kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = 0.25  # Turn Left at 0.25 rad/s
-    elif (north and east and west):
-        kobukiDecisionVelocity.linear.x = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 1rad/s
+    elif (north == 1 and east == 1 and west == 1):
+        kobukiDecisionVelocity.linear.x = -0.1 
         kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 0.25 rad/s
+        kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
     else:  # stay
         kobukiDecisionVelocity.linear.x = 0.0
         kobukiDecisionVelocity.linear.y = 0.0  
