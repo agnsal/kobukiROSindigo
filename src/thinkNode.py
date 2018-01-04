@@ -46,27 +46,27 @@ def decisionCallback(kobukiStatus):
     else:
         toDo = 'Stay'
     if toDo == 'GoStraight':
-        kobukyDecisionVelocity.linear.x = 0.0
-        kobukyDecisionVelocity.linear.y = 0.25  # Go forward at 0.25 m/s
-        kobukyDecisionVelocity.angular.z = 0.0
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = 0.25  # Go forward at 0.25 m/s
+        kobukiDecisionVelocity.angular.z = 0.0
     elif toDo == 'TurnEast':
-        kobukyDecisionVelocity.linear.x = 0.0
-        kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
-        kobukyDecisionVelocity.angular.z = 0.25  # Turn Right at 0.25 rad/s
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.angular.z = 0.25  # Turn Right at 0.25 rad/s
     elif toDo == 'TurnWest':
-        kobukyDecisionVelocity.linear.x = 0.0
-        kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
-        kobukyDecisionVelocity.angular.z = -0.25  # Turn Left at 0.25 rad/s
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.angular.z = -0.25  # Turn Left at 0.25 rad/s
     elif toDo == 'TurnSouth':
-        kobukyDecisionVelocity.linear.x = 0.0
-        kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
-        kobukyDecisionVelocity.angular.z = 1.0  # Turn Left at 0.25 rad/s
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 0.25 rad/s
     else:  # toDo == 'Stay'
-        kobukyDecisionVelocity.linear.x = 0.0
-        kobukyDecisionVelocity.linear.y = 0.0  
-        kobukyDecisionVelocity.angular.z = 0.0
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = 0.0  
+        kobukiDecisionVelocity.angular.z = 0.0
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
-    rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukyDecisionVelocity.linear.x , kobukyDecisionVelocity.linear.y, kobukyDecisionVelocity.angular.z))
+    rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))
     prologEngine.retractall('perceptionBumper(_)')
     print 'Previous knowledge retracted...'
 
@@ -77,27 +77,27 @@ def decisionCallbackPy(kobukiStatus):
     east = kobukiStatus.bumperE
     rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
     if north is False:
-        kobukyDecisionVelocity.linear.x = 0.0
-        kobukyDecisionVelocity.linear.y = 0.25  # Go forward at 0.25 m/s
-        kobukyDecisionVelocity.angular.z = 0.0
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = 0.25  # Go forward at 0.25 m/s
+        kobukiDecisionVelocity.angular.z = 0.0
     elif east is False:
-        kobukyDecisionVelocity.linear.x = 0.0
-        kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
-        kobukyDecisionVelocity.angular.z = 0.25  # Turn Right at 0.25 rad/s
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.angular.z = 0.25  # Turn Right at 0.25 rad/s
     elif west is False:
-        kobukyDecisionVelocity.linear.x = 0.0
-        kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
-        kobukyDecisionVelocity.angular.z = -0.25  # Turn Left at 0.25 rad/s
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.angular.z = -0.25  # Turn Left at 0.25 rad/s
     elif (north and east and west):
-        kobukyDecisionVelocity.linear.x = 0.0
-        kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
-        kobukyDecisionVelocity.angular.z = 1.0  # Turn Left at 0.25 rad/s
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
+        kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 0.25 rad/s
     else:  # stay
-        kobukyDecisionVelocity.linear.x = 0.0
-        kobukyDecisionVelocity.linear.y = 0.0  
-        kobukyDecisionVelocity.angular.z = 0.0
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = 0.0  
+        kobukiDecisionVelocity.angular.z = 0.0
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
-    rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukyDecisionVelocity.linear.x , kobukyDecisionVelocity.linear.y, kobukyDecisionVelocity.angular.z))
+    rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))
     
 def think():
     # learn('behaviour.pl')  # Pyswip is not compatible
