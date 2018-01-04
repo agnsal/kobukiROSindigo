@@ -25,11 +25,9 @@ def learn(prologFilePath):
 
 def decisionCallback(kobukiStatus):
     print 'Decision taking started...'
-    prologEngine.retractall('perceptionBumper(_)')
-    print 'Previous knowledge retracted...'
-    west = '' + kobukiStatus.bumperW
-    north = '' + kobukiStatus.bumperN
-    est = '' + kobukiStatus.bumperE
+    west = str(kobukiStatus.bumperW).replace('"', "'")
+    north = str(kobukiStatus.bumperN).replace('"', "'")
+    est = str(kobukiStatus.bumperE).replace('"', "'")
     perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', est]]
     print(perceptionBumper)
     prologEngine.assertz('perceptionBumper(' + perceptionBumper + ')')
@@ -67,7 +65,9 @@ def decisionCallback(kobukiStatus):
         kobukyDecisionVelocity.angular.z = 0.0
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukyDecisionVelocity.linear.x , kobukyDecisionVelocity.linear.y, kobukyDecisionVelocity.angular.z))
-        
+    prologEngine.retractall('perceptionBumper(_)')
+    print 'Previous knowledge retracted...'
+    
 def think():
     learn('behaviour.pl')
     rospy.init_node('act')
