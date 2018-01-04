@@ -5,14 +5,14 @@ A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Pr
 1. **(OPTIONAL, do this if you don't have SWI-Prolog installe or if you have problems with Pyswip integration) Install SWI-Prolog with shared library enabled:** \
   apt-get install autoconf \
   git clone https://github.com/SWI-Prolog/swipl-devel.git \
-  cd swipl-devel/package
-  chmod u+x configure
+  cd swipl-devel/package \
+  chmod u+x configure \
   **To configure the source with shared library enabled:** ./configure --prefix=/usr --enable-shared \
   make \
   sudo make install \
   cd packages/clpqr \
   ./configure --prefix=/usr --enable-shared $ make && sudo make install \
-  sudo ln -s /usr/lib/pl-5.6.34/lib/i686-linux/libpl.so.5.6.34 /usr/lib/libpl.so  \
+  sudo ln -s /usr/lib/pl-5.6.34/lib/i686-linux/libpl.so.5.6.34 /usr/lib/libpl.so  
 2. **Install the Python needed library:** \
   git clone https://github.com/yuce/pyswip.git \
   cd pyswip \
