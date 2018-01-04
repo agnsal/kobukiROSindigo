@@ -6,7 +6,7 @@ takeDecision('TurnSouth') :-
     hasValue('bumperN', 'True'), hasValue('bumperW', 'True'), hasValue('bumperE', 'True'), !.
 
 takeDecision('GoStraight') :-
-    hasValue('bumperN', 'False'), !.
+    hasValue('bumperN', 'False'), hasValue('bumperW', 'False'), hasValue('bumperE', 'False') !.
 
 takeDecision('TurnWest') :-
     hasValue('bumperW', 'False'), !.
