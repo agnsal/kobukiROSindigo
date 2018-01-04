@@ -16,6 +16,7 @@ A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Pr
   ./configure --prefix=/usr --enable-shared $ make && sudo make install \
   sudo ln -s /usr/lib/pl-5.6.34/lib/i686-linux/libpl.so.5.6.34 /usr/lib/libpl.so  
 2. **Install the Python needed library:** \
+  cd ../../.. \
   git clone https://github.com/yuce/pyswip.git \
   cd pyswip \
   python setup.py install
