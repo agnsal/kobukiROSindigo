@@ -1,6 +1,6 @@
-hasValue('bumperW', W) :- perceptionNorth([['bumperW', W], _, _]).
-hasValue('bumperN', N) :- perceptionNorth([_, ['bumperN', N], _]).
-hasValue('bumperE', E) :- perceptionNorth([_, _, ['bumperE', E]]).
+hasValue('bumperW', W) :- perceptionBumper([['bumperW', W], _, _]).
+hasValue('bumperN', N) :- perceptionBumper([_, ['bumperN', N], _]).
+hasValue('bumperE', E) :- perceptionBumper([_, _, ['bumperE', E]]).
 
 takeDecision('GoStraight') :-
     hasValue('bumperN', 'False'), !.
