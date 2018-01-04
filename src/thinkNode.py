@@ -25,6 +25,7 @@ def learn(prologFilePath):
 
 def decisionCallback(kobukiStatus):
     print 'Decision taking started...'
+    prologEngine.assertz('perceptionBumper(placeHolder)')
     prologEngine.retractall('perceptionBumper(_)')
     print 'Previous knowledge retracted...'
     west = kobukiStatus.bumperW
