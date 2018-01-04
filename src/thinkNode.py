@@ -101,7 +101,7 @@ def decisionCallbackPy(kobukiStatus):
     
 def think():
     # learn('behaviour.pl')  # Pyswip is not compatible
-    rospy.init_node('act')
+    rospy.init_node('think')
     rospy.Subscriber("/kobuki_status", Status, decisionCallbackPy)
     rospy.spin()
 
