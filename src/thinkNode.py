@@ -75,9 +75,10 @@ def decisionCallbackPy(kobukiStatus):
     print 'Decision taking started...'
     luck = random.randint(0,3)
     if luck == 1:  #  Casual move
+        lukyPi = random.randint(1,4)
         kobukiDecisionVelocity.linear.x = -0.1
         kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = luck*(-1.5)
+        kobukiDecisionVelocity.angular.z = luckyPi*(-1.5)
     else:
         west = kobukiStatus.bumperW
         north = kobukiStatus.bumperN
