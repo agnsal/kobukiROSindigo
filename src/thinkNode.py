@@ -12,7 +12,7 @@ kobukiStatus = Status()  # The updated status of the robot
 prologEngine = Prolog()
 kobukiDecisionVelocity = Twist()
 
-def learn(prologFilePath):
+def learn(prologFilePath):  # Function not used because Pyswip is not compatible
     '''
     Learns from a SWI Prolog file.
     :param prologFilePath: The path of the Prolog (.pl or .txt) file we need to use.
@@ -23,16 +23,17 @@ def learn(prologFilePath):
     prologEngine.consult(prologFilePath)
     print 'Learning finished'
 
+''' # This code gives error "Segmentation fault (core dumped)" because of Pyswip compatibility error
 def decisionCallback(kobukiStatus):
     print 'Decision taking started...'
-    west = str(kobukiStatus.bumperW).replace('"', "'")
-    north = str(kobukiStatus.bumperN).replace('"', "'")
-    est = str(kobukiStatus.bumperE).replace('"', "'")
-    perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', est]]
+    west = kobukiStatus.bumperW
+    north = kobukiStatus.bumperN
+    east = kobukiStatus.bumperE
+    perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', east]]
     print(perceptionBumper)
-    prologEngine.assertz('perceptionBumper(' + perceptionBumper + ')')
+    prologEngine.assertz('perceptionBumper(' + str(perceptionBumper).replace('"', "'") + ')')
     print 'New knowledge taken...'
-    rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, est))
+    rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
     try:
         out = list(prologEngine.query('takeDecision(D)'))
     except:  # If Prolog doesn't work (maybe because it can't receive data from sensors) the robot has to stay
@@ -47,7 +48,7 @@ def decisionCallback(kobukiStatus):
         kobukyDecisionVelocity.linear.x = 0.0
         kobukyDecisionVelocity.linear.y = 0.25  # Go forward at 0.25 m/s
         kobukyDecisionVelocity.angular.z = 0.0
-    elif toDo == 'TurnEst':
+    elif toDo == 'TurnEast':
         kobukyDecisionVelocity.linear.x = 0.0
         kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
         kobukyDecisionVelocity.angular.z = 0.25  # Turn Right at 0.25 rad/s
@@ -67,9 +68,39 @@ def decisionCallback(kobukiStatus):
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukyDecisionVelocity.linear.x , kobukyDecisionVelocity.linear.y, kobukyDecisionVelocity.angular.z))
     prologEngine.retractall('perceptionBumper(_)')
     print 'Previous knowledge retracted...'
+'''
+
+def decisionCallback(kobukiStatus):
+    print 'Decision taking started...'
+    west = kobukiStatus.bumperW
+    north = kobukiStatus.bumperN
+    east = kobukiStatus.bumperE
+    rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
+    if !(north):
+        kobukyDecisionVelocity.linear.x = 0.0
+        kobukyDecisionVelocity.linear.y = 0.25  # Go forward at 0.25 m/s
+        kobukyDecisionVelocity.angular.z = 0.0
+    elif !(east):
+        kobukyDecisionVelocity.linear.x = 0.0
+        kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
+        kobukyDecisionVelocity.angular.z = 0.25  # Turn Right at 0.25 rad/s
+    elif !(west):
+        kobukyDecisionVelocity.linear.x = 0.0
+        kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
+        kobukyDecisionVelocity.angular.z = -0.25  # Turn Left at 0.25 rad/s
+    elif (north and east and west):
+        kobukyDecisionVelocity.linear.x = 0.0
+        kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
+        kobukyDecisionVelocity.angular.z = 1.0  # Turn Left at 0.25 rad/s
+    else:  # stay
+        kobukyDecisionVelocity.linear.x = 0.0
+        kobukyDecisionVelocity.linear.y = 0.0  
+        kobukyDecisionVelocity.angular.z = 0.0
+    pubKobukiVelocity.publish(kobukiDecisionVelocity)
+    rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukyDecisionVelocity.linear.x , kobukyDecisionVelocity.linear.y, kobukyDecisionVelocity.angular.z))
     
 def think():
-    learn('behaviour.pl')
+    # learn('behaviour.pl') # Pyswip is not compatible
     rospy.init_node('act')
     rospy.Subscriber("/kobuki_status", Status, decisionCallback)
     rospy.spin()
