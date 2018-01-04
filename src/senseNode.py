@@ -19,9 +19,9 @@ def odometryCallback(data):
 def bumperCallback(data):
     state = data.state
     bumper = data.bumper
-    kobukiStatus.bumperE = 0
-    kobukiStatus.bumperW = 0
-    kobukiStatus.bumperN = 0
+    kobukiStatus.bumperE = False
+    kobukiStatus.bumperW = False
+    kobukiStatus.bumperN = False
     if bumper == 0:
         kobukiStatus.bumperW = state
     elif bumper == 1:
