@@ -23,8 +23,8 @@ def learn(prologFilePath):  # Function not used because Pyswip is not compatible
     prologEngine.consult(prologFilePath)
     print 'Learning finished'
 
-'''
-# This code gives error "Segmentation fault (core dumped)" because of Pyswip compatibility error
+
+# The following function gives the "Segmentation fault (core dumped)" error because of Pyswip
 def decisionCallback(kobukiStatus):
     print 'Decision taking started...'
     west = kobukiStatus.bumperW
@@ -69,9 +69,8 @@ def decisionCallback(kobukiStatus):
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukyDecisionVelocity.linear.x , kobukyDecisionVelocity.linear.y, kobukyDecisionVelocity.angular.z))
     prologEngine.retractall('perceptionBumper(_)')
     print 'Previous knowledge retracted...'
-'''
 
-def decisionCallback(kobukiStatus):
+def decisionCallbackPy(kobukiStatus):
     print 'Decision taking started...'
     west = kobukiStatus.bumperW
     north = kobukiStatus.bumperN
@@ -101,9 +100,9 @@ def decisionCallback(kobukiStatus):
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukyDecisionVelocity.linear.x , kobukyDecisionVelocity.linear.y, kobukyDecisionVelocity.angular.z))
     
 def think():
-    learn('behaviour.pl') # Pyswip is not compatible
+    # learn('behaviour.pl')  # Pyswip is not compatible
     rospy.init_node('act')
-    rospy.Subscriber("/kobuki_status", Status, decisionCallback)
+    rospy.Subscriber("/kobuki_status", Status, decisionCallbackPy)
     rospy.spin()
 
 if __name__ == '__main__':
