@@ -32,7 +32,7 @@ A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Pr
   mkdir kobukiROSindigo/msg \
   cd ~/catkin_ws \
   catkin_make \
-  source devel/setup.bash
+  echo "source devel/setup.bash" >> ~/.bashrc
 5. **To test it:** \
   roscd kobukiROSindigo \
   cat package.xml
