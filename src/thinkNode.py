@@ -23,7 +23,8 @@ def learn(prologFilePath):  # Function not used because Pyswip is not compatible
     prologEngine.consult(prologFilePath)
     print 'Learning finished'
 
-''' # This code gives error "Segmentation fault (core dumped)" because of Pyswip compatibility error
+'''
+# This code gives error "Segmentation fault (core dumped)" because of Pyswip compatibility error
 def decisionCallback(kobukiStatus):
     print 'Decision taking started...'
     west = kobukiStatus.bumperW
@@ -76,15 +77,15 @@ def decisionCallback(kobukiStatus):
     north = kobukiStatus.bumperN
     east = kobukiStatus.bumperE
     rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
-    if !(north):
+    if north is False:
         kobukyDecisionVelocity.linear.x = 0.0
         kobukyDecisionVelocity.linear.y = 0.25  # Go forward at 0.25 m/s
         kobukyDecisionVelocity.angular.z = 0.0
-    elif !(east):
+    elif east is False:
         kobukyDecisionVelocity.linear.x = 0.0
         kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
         kobukyDecisionVelocity.angular.z = 0.25  # Turn Right at 0.25 rad/s
-    elif !(west):
+    elif west is False:
         kobukyDecisionVelocity.linear.x = 0.0
         kobukyDecisionVelocity.linear.y = -0.25  # Go back at 0.25 m/s
         kobukyDecisionVelocity.angular.z = -0.25  # Turn Left at 0.25 rad/s
@@ -100,7 +101,7 @@ def decisionCallback(kobukiStatus):
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukyDecisionVelocity.linear.x , kobukyDecisionVelocity.linear.y, kobukyDecisionVelocity.angular.z))
     
 def think():
-    # learn('behaviour.pl') # Pyswip is not compatible
+    learn('behaviour.pl') # Pyswip is not compatible
     rospy.init_node('act')
     rospy.Subscriber("/kobuki_status", Status, decisionCallback)
     rospy.spin()
