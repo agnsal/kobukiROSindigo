@@ -63,7 +63,7 @@ def decisionCallback(kobukiStatus):
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukyDecisionVelocity.linear.x , kobukyDecisionVelocity.linear.y, kobukyDecisionVelocity.angular.z))
         
 def think():
-    learn()
+    learn('behaviour.pl')
     rospy.init_node('act')
     rospy.Subscriber("/kobuki_status", Status, decisionCallback)
     rospy.spin()
