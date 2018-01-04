@@ -25,14 +25,14 @@ def learn(prologFilePath):
 
 def decisionCallback(kobukiStatus):
     print 'Decision taking started...'
-    prologEngine.assertz('perceptionBumper(placeHolder)')
     prologEngine.retractall('perceptionBumper(_)')
     print 'Previous knowledge retracted...'
-    west = kobukiStatus.bumperW
-    north = kobukiStatus.bumperN
-    est = kobukiStatus.bumperE
+    west = '' + kobukiStatus.bumperW
+    north = '' + kobukiStatus.bumperN
+    est = '' + kobukiStatus.bumperE
     perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', est]]
-    prologEngine.assertz('perceptionBumper(' + str(perceptionBumper) + ')')
+    print(perceptionBumper)
+    prologEngine.assertz('perceptionBumper(' + perceptionBumper + ')')
     print 'New knowledge taken...'
     rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, est))
     try:
