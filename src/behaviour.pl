@@ -3,14 +3,14 @@ hasValue('bumperN', N) :- perceptionBumper([_, ['bumperN', N], _]).
 hasValue('bumperE', E) :- perceptionBumper([_, _, ['bumperE', E]]).
 
 takeDecision('TurnSouth') :-
-    hasValue('bumperN', '1'), hasValue('bumperW', '1'), hasValue('bumperE', '1'), !.
+    hasValue('bumperN', 'True'), hasValue('bumperW', 'True'), hasValue('bumperE', 'True'), !.
 
 takeDecision('GoStraight') :-
-    hasValue('bumperN', '0'), !.
+    hasValue('bumperN', 'False'), !.
 
 takeDecision('TurnWest') :-
-    hasValue('bumperW', '0'), !.
+    hasValue('bumperW', 'False'), !.
 
 takeDecision('TurnEast') :-
-    hasValue('bumperE', '0').
+    hasValue('bumperE', 'False').
   
