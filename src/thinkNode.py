@@ -24,7 +24,6 @@ def learn(prologFilePath):  # Function not used because Pyswip is not compatible
     prologEngine.consult(prologFilePath)
     print 'Learning finished'
 
-
 # The following function gives the "Segmentation fault (core dumped)" error because of Pyswip
 def decisionCallback(kobukiStatus):
     print 'Decision taking started...'
@@ -47,7 +46,7 @@ def decisionCallback(kobukiStatus):
     else:
         toDo = 'Stay'
     if toDo == 'GoStraight':
-        kobukiDecisionVelocity.linear.x = 0.25 # Go forward at 0.25 m/s
+        kobukiDecisionVelocity.linear.x = 0.15 # Go forward at 0.25 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 0.0
     elif toDo == 'TurnEast':
@@ -71,7 +70,7 @@ def decisionCallback(kobukiStatus):
     prologEngine.retractall('perceptionBumper(_)')
     print 'Previous knowledge retracted...'
 
-def decisionCallbackPy(kobukiStatus):
+def decisionCallbackRandomPy(kobukiStatus):
     print 'Decision taking started...'
     luck = random.randint(0,3)
     if luck == 1:  #  Casual move
@@ -85,7 +84,7 @@ def decisionCallbackPy(kobukiStatus):
         east = kobukiStatus.bumperE
         rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
         if north is False and east is False and west is False:
-            kobukiDecisionVelocity.linear.x = 0.25  # Go forward at 0.25 m/s
+            kobukiDecisionVelocity.linear.x = 0.15  # Go forward at 0.25 m/s
             kobukiDecisionVelocity.linear.y = 0.0
             kobukiDecisionVelocity.angular.z = 0.0
             pubKobukiVelocity.publish(kobukiDecisionVelocity)
@@ -107,6 +106,36 @@ def decisionCallbackPy(kobukiStatus):
             kobukiDecisionVelocity.angular.z = 0.0
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))
+
+def decisionCallbackPy(kobukiStatus):
+    print 'Decision taking started...'
+    west = kobukiStatus.bumperW
+    north = kobukiStatus.bumperN
+    east = kobukiStatus.bumperE
+    rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
+    if north is False and east is False and west is False:
+        kobukiDecisionVelocity.linear.x = 0.15  # Go forward at 0.25 m/s
+        kobukiDecisionVelocity.linear.y = 0.0
+        kobukiDecisionVelocity.angular.z = 0.0
+        pubKobukiVelocity.publish(kobukiDecisionVelocity)
+    elif east is False:
+        kobukiDecisionVelocity.linear.x = -0.1
+        kobukiDecisionVelocity.linear.y = 0.0
+        kobukiDecisionVelocity.angular.z = -2.0  # Turn Right at 1 rad/s
+    elif west is False:
+        kobukiDecisionVelocity.linear.x = -0.1
+        kobukiDecisionVelocity.linear.y = 0.0
+        kobukiDecisionVelocity.angular.z = 2.0  # Turn Left at 1rad/s
+    elif (north and east and west):
+        kobukiDecisionVelocity.linear.x = -0.1 
+        kobukiDecisionVelocity.linear.y = 0.0
+        kobukiDecisionVelocity.angular.z = 8.0  # Turn Left at 4 rad/s
+    else:  # stay
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = 0.0  
+        kobukiDecisionVelocity.angular.z = 0.0
+    pubKobukiVelocity.publish(kobukiDecisionVelocity)
+    rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))    
     
 def think():
     # learn('behaviour.pl')  # Pyswip is not compatible
