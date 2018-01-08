@@ -91,15 +91,15 @@ def decisionCallbackRandomPy(kobukiStatus):
         elif east is False:
             kobukiDecisionVelocity.linear.x = -0.1
             kobukiDecisionVelocity.linear.y = 0.0
-            kobukiDecisionVelocity.angular.z = -2.0  # Turn Right at 1 rad/s
+            kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
         elif west is False:
             kobukiDecisionVelocity.linear.x = -0.1
             kobukiDecisionVelocity.linear.y = 0.0
-            kobukiDecisionVelocity.angular.z = 2.0  # Turn Left at 1rad/s
+            kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 1rad/s
         elif (north and east and west):
             kobukiDecisionVelocity.linear.x = -0.1 
             kobukiDecisionVelocity.linear.y = 0.0
-            kobukiDecisionVelocity.angular.z = 8.0  # Turn Left at 4 rad/s
+            kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
         else:  # stay
             kobukiDecisionVelocity.linear.x = 0.0
             kobukiDecisionVelocity.linear.y = 0.0  
@@ -121,15 +121,15 @@ def decisionCallbackPy(kobukiStatus):
     elif east is False:
         kobukiDecisionVelocity.linear.x = -0.1
         kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = -2.0  # Turn Right at 1 rad/s
+        kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
     elif west is False:
         kobukiDecisionVelocity.linear.x = -0.1
         kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = 2.0  # Turn Left at 1rad/s
+        kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 1rad/s
     elif (north and east and west):
         kobukiDecisionVelocity.linear.x = -0.1 
         kobukiDecisionVelocity.linear.y = 0.0
-        kobukiDecisionVelocity.angular.z = 8.0  # Turn Left at 4 rad/s
+        kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
     else:  # stay
         kobukiDecisionVelocity.linear.x = 0.0
         kobukiDecisionVelocity.linear.y = 0.0  
