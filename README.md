@@ -1,9 +1,9 @@
 # kobukiROSindigo
-> A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI Prolog modules to take decisions.
+> A kobuki robot ROS package (for both Gazebo and physical robot) that uses SWI-Prolog modules to take decisions.
 
 
 Actually, Prolog integration code is commented because Pyswip library is not compatible with my environment, but you can try it  on your own. \
-You can use SWI Prolog programs to solve more complex tasks (you can see there a Pyswip example that you can expand).
+You can use SWI-Prolog programs to solve more complex tasks (you can see there a Pyswip example that you can expand).
 
 
 ![](diagram.png)
@@ -14,7 +14,7 @@ It is made of 3 ROS nodes:
 - ActNode.py: Takes ThinkNode.py results and gives commands to the robot motors.
 
 ## Instructions:
-1. (OPTIONAL, do this if you don't have SWI-Prolog installe or if you have problems with Pyswip integration) Install SWI-Prolog with shared library enabled:
+1. (OPTIONAL, do this if you are going to use SWI-Prolog and you don't have SWI-Prolog installed or if you have problems with Pyswip integration) Install SWI-Prolog with shared library enabled:
 ```sh
 apt-get install autoconf
 git clone https://github.com/SWI-Prolog/swipl-devel.git
