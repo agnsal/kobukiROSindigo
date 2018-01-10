@@ -78,7 +78,7 @@ chmod +x senseNode.py
 chmod +x thinkNode.py
 chmod +x actNode.py 
 ```
-8. To run the scripts (use a terminal window for each one) on the physical robot or on the simulation robot (that has to be launched in a separated terminal window using the command ```sh roslaunch turtlebot_gazebo turtlebot_world.launch ```):
+8. To run the scripts (use a terminal window for each one) on the physical robot or on the simulation robot (that has to be launched in a separated terminal window using the command ``` roslaunch turtlebot_gazebo turtlebot_world.launch ```):
 ```sh
 rosrun kobukiROSindigo senseNode.py
 rosrun kobukiROSindigo thinkNode.py
