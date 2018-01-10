@@ -22,7 +22,8 @@ cd swipl-devel
 chmode u+x prepare
 ./prepare
 chmod u+x configure
-**To configure the source with shared library enabled:** ./configure --prefix=/usr --enable-shared
+# To configure the source with shared library enabled:
+./configure --prefix=/usr --enable-shared
 make
 sudo make install
 cd packages/clpqr
