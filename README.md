@@ -6,7 +6,7 @@ Actually, Prolog integration code is commented because Pyswip library is not com
 You can use SWI-Prolog programs to solve more complex tasks (you can see there a Pyswip example that you can expand).
 
 
-![](diagram.png)
+![](headerDiagram.png)
 
 It is made of 3 ROS nodes:
 - SenseNode.py: Takes data from robot sensors.
