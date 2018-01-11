@@ -15,9 +15,9 @@ cv2.namedWindow("robotWiew", 1)
 
 def cameraCallback(data):
     sUnixTimestamp = int(time.time())  # Timestamp in seconds
-	image = bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
-	cv2.imshow("robotWiew", image)
-	cv2.waitKey(3)  # Display a frame for 3 ms
+    image = bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
+    cv2.imshow("robotWiew", image)
+    cv2.waitKey(3)  # Display a frame for 3 ms
     rospy.loginfo('cameraTimestamp: {}'.format(sUnixTimestamp))
 
 def odometryCallback(data):
