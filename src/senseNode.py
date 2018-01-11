@@ -12,12 +12,12 @@ from sensor_msgs.msg import Image
 pubKobukiStatus = rospy.Publisher('kobuki_status', Status, queue_size=1)
 kobukiStatus = Status()  # The updated status of the robot
 bridge = cv_bridge.CvBridge()
-cv2.namedWindow("robotWiew", 1)
+cv2.namedWindow("robotView", 1)
 
 def cameraCallback(data):
     sUnixTimestamp = int(time.time())  # Timestamp in seconds
     image = bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
-    cv2.imshow("robotWiew", image)
+    cv2.imshow("robotView", image)
     cv2.waitKey(3)  # Display a frame for 3 ms
     rospy.loginfo('cameraTimestamp: {}'.format(sUnixTimestamp))
 
