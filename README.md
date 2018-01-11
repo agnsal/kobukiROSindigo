@@ -92,6 +92,13 @@ rosrun kobukiROSindigo actNode.py
 ```
 
 
+![](scr1.png)
+
+![](scr2.png)
+
+![](scr3.png)
+
+
 ## Contacts
 
 Agnese Salutari – agneses92@hotmail.it
