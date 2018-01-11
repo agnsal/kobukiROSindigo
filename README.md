@@ -72,14 +72,18 @@ mv kobukiROSindigo/CMakeLists.txt src/kobukiROSindigo/
 rm -r kobukiROSindigo
 catkin_make  
 ```
-7. To build the robot scripts:
+7. To avoid errors with OpenCV library:
+```sh
+ln /dev/null /dev/raw1394
+```
+8. To build the robot scripts:
 ```sh
 cd ~/catkin_ws/src/kobukiROSindigo/src
 chmod +x senseNode.py
 chmod +x thinkNode.py
 chmod +x actNode.py 
 ```
-8. To run the scripts (use a terminal window for each one) on the physical robot or on the simulation robot (that has to be launched in a separated terminal window using the command ``` roslaunch turtlebot_gazebo turtlebot_world.launch ```):
+9. To run the scripts (use a terminal window for each one) on the physical robot or on the simulation robot (that has to be launched in a separated terminal window using the command ``` roslaunch turtlebot_gazebo turtlebot_world.launch ```):
 ```sh
 rosrun kobukiROSindigo senseNode.py
 rosrun kobukiROSindigo thinkNode.py
