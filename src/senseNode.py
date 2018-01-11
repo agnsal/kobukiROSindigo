@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
+import time
 import cv2, cv_bridge
 from nav_msgs.msg import Odometry
 from kobuki_msgs.msg import BumperEvent
