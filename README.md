@@ -14,7 +14,7 @@ It is made of 3 ROS nodes:
 - ThinkNode.py: Takes SenseNode.py results and uses bumper data to take a decision about velocity.
 - ActNode.py: Takes ThinkNode.py results and gives commands to the robot motors.
 
-## Instructions:
+## Instructions
 1. (OPTIONAL, do this if you are going to use SWI-Prolog and you don't have SWI-Prolog installed or if you have problems with Pyswip integration) Install SWI-Prolog with shared library enabled:
 ```sh
 apt-get install autoconf
@@ -91,6 +91,8 @@ rosrun kobukiROSindigo thinkNode.py
 rosrun kobukiROSindigo actNode.py
 ```
 
+
+## Screenshots
 
 ![](screen1.png)
 
