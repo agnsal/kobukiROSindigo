@@ -92,11 +92,11 @@ rosrun kobukiROSindigo actNode.py
 ```
 
 
-![](scr1.png)
+![](screen1.png)
 
-![](scr2.png)
+![](screen2.png)
 
-![](scr3.png)
+![](screen3.png)
 
 
 ## Contacts
