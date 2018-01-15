@@ -23,6 +23,9 @@ from pyDatalog import pyDatalog
 from pyDatalog.pyDatalog import assert_fact, load, ask
 from geometry_msgs.msg import Twist
 from kobukiROSindigo.msg import Status
+import logging
+from pyDatalog import pyEngine
+logging.basicConfig(level=logging.INFO)
 
 pubKobukiVelocity = rospy.Publisher('kobuki_velocity', Twist, queue_size=1)
 kobukiStatus = Status()  # The updated status of the robot
