@@ -19,6 +19,7 @@ import os.path
 import time
 import random
 from pyswip import Prolog
+from pyDatalog import pyDatalog
 from pyDatalog.pyDatalog import assert_fact, load, ask
 from geometry_msgs.msg import Twist
 from kobukiROSindigo.msg import Status
