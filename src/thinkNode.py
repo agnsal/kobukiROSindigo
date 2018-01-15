@@ -18,6 +18,7 @@ import math
 import time
 import random
 from pyswip import Prolog
+from pyDatalog.pyDatalog import assert_fact, load, ask
 from geometry_msgs.msg import Twist
 from kobukiROSindigo.msg import Status
 
@@ -149,10 +150,63 @@ def decisionCallbackPy(kobukiStatus):
         kobukiDecisionVelocity.angular.z = 0.0
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))    
+
+# The following function uses Datalog 
+def datalogLearning(self, filePath = 'behaviour.dl'):
+    rules = open(filePath).read()
+    load(rules)
+    
+# The following function uses Datalog 
+def decisionCallbackDatalog(kobukiStatus):
+    print 'Decision taking started...'
+    pyDatalog.create_terms('D')
+    west = kobukiStatus.bumperW
+    north = kobukiStatus.bumperN
+    east = kobukiStatus.bumperE
+    perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', east]]
+    print(perceptionBumper)
+    assert_fact('perceptionBumper(' + str(perceptionBumper).replace('"', "'") + ')') #  Asserts a new fact
+    print 'New knowledge taken...'
+    rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
+    try:
+        out = ask('takeDecision(D)')
+    except:  # If Prolog doesn't work (maybe because it can't receive data from sensors) the robot has to stay
+        out = []
+    # print(out)  # test
+    if len(out) > 0 :  # If we can take more than one decision, we take the 1st one
+        # print(out[0]['D'])  # Test
+        toDo = out[0]['D']
+    else:
+        toDo = 'Stay'
+    if toDo == 'GoStraight':
+        kobukiDecisionVelocity.linear.x = 0.15 # Go forward at 0.15 m/s
+        kobukiDecisionVelocity.linear.y = 0.0
+        kobukiDecisionVelocity.angular.z = 0.0
+    elif toDo == 'TurnEast':
+        kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
+        kobukiDecisionVelocity.linear.y = 0.0
+        kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
+    elif toDo == 'TurnWest':
+        kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
+        kobukiDecisionVelocity.linear.y = 0.0
+        kobukiDecisionVelocity.angular.z = 1  # Turn Left at 1 rad/s
+    elif toDo == 'TurnSouth':
+        kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
+        kobukiDecisionVelocity.linear.y = 0.0
+        kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
+    else:  # toDo == 'Stay'
+        kobukiDecisionVelocity.linear.x = 0.0
+        kobukiDecisionVelocity.linear.y = 0.0  
+        kobukiDecisionVelocity.angular.z = 0.0
+    pubKobukiVelocity.publish(kobukiDecisionVelocity)
+    rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))
+    prologEngine.retractall('perceptionBumper(_)')
+    print 'Previous knowledge retracted...'    
     
 def think():
     # learn('behaviour.pl')  # Pyswip is not compatible
     rospy.init_node('think')
+    datalogLearning('behaviour.dl')
     rospy.Subscriber("/kobuki_status", Status, decisionCallbackPy)
     rospy.spin()
 
