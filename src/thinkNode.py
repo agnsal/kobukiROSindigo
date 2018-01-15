@@ -173,7 +173,9 @@ def decisionCallbackDatalog(kobukiStatus):
     east = kobukiStatus.bumperE
     perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', east]]
     print(perceptionBumper)
-    assert_fact('perceptionBumper', + str(perceptionBumper).replace('"', "'")) #  Asserts a new fact
+    fact = str(perceptionBumper).replace('"', "'")
+    print 'Fact: ' + fact
+    assert_fact('perceptionBumper', fact) #  Asserts a new fact
     print 'New knowledge taken...'
     rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
     try:
