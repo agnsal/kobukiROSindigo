@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and limitations 
 
 import rospy
 import math
+import os.path
 import time
 import random
 from pyswip import Prolog
@@ -206,7 +207,7 @@ def decisionCallbackDatalog(kobukiStatus):
 def think():
     # learn('behaviour.pl')  # Pyswip is not compatible
     rospy.init_node('think')
-    datalogLearning('behaviour.dl')
+    datalogLearning(__path__[0]+'/behaviour.dl')
     rospy.Subscriber("/kobuki_status", Status, decisionCallbackDatalog)
     rospy.spin()
 
