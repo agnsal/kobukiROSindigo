@@ -15,17 +15,35 @@ See the License for the specific language governing permissions and limitations 
 
 import rospy
 import math
-import os.path
 import time
 import random
 from pyswip import Prolog
+from pyDatalog import pyEngine
 from pyDatalog import pyDatalog
-from pyDatalog.pyDatalog import assert_fact, load, ask
 from geometry_msgs.msg import Twist
 from kobukiROSindigo.msg import Status
+from threading import Thread
 import logging
-from pyDatalog import pyEngine
+
 logging.basicConfig(level=logging.INFO)
+
+class thinkingThread(Thread):
+    def __init__(self, callback):
+        Thread.__init__(self)
+        self.callback = callback
+
+    def run(self):
+        data = "hello"
+        self.callback(data)
+
+
+class Manager():
+    def Test(self):
+        MyThread(self.on_thread_finished).start()
+
+    def on_thread_finished(self, data):
+        print "on_thread_finished:", data
+
 
 pubKobukiVelocity = rospy.Publisher('kobuki_velocity', Twist, queue_size=1)
 kobukiStatus = Status()  # The updated status of the robot
@@ -164,33 +182,28 @@ def datalogLearning(self, filePath = 'behaviour.dl'):
     pyDatalog.create_terms('W')
     pyDatalog.create_terms('E')
     rules = open(filePath).read()
-    load(rules)
+    pyDatalog.load(rules)
     
 # The following function uses Datalog 
-def updateCallbackDatalog(kobukiStatus):
-    print 'Decision taking started...'
-    west = kobukiStatus.bumperW
-    north = kobukiStatus.bumperN
-    east = kobukiStatus.bumperE
-    perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', east]]
-    bumperEventList.append(perceptionBumper)   
-    
-# The following function uses Datalog     
-def decisionDatalog():
+def speecunialityCallbackDatalog(kobukiStatus):
     print 'Decision taking started...'
     west = kobukiStatus.bumperW
     north = kobukiStatus.bumperN
     east = kobukiStatus.bumperE
     perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', east]]
     bumperEventList.append(perceptionBumper)
+    rate = rospy.Rate(1) # 1 Hz
+    # Do stuff, maybe in a while loop
+    print 'Decision taking started...'
     print(perceptionBumper)
     fact = str(perceptionBumper).replace('"', "'")
     print 'Fact: ' + fact
-    assert_fact('perceptionBumper', fact) #  Asserts a new fact
+    rospy.
+    pyDatalog.assert_fact('perceptionBumper', fact) #  Asserts a new fact
     print 'New knowledge taken...'
     rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
     try:
-        out = ask('takeDecision(D)')
+        out = pyDatalog.ask('takeDecision(D)')
     except:  # If Prolog doesn't work (maybe because it can't receive data from sensors) the robot has to stay
         out = []
     # print(out)  # test
@@ -221,14 +234,16 @@ def decisionDatalog():
         kobukiDecisionVelocity.angular.z = 0.0
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))
-    prologEngine.retractall('perceptionBumper(_)')
-    print 'Previous knowledge retracted...' 
+    pyDatalog.retract_fact('perceptionBumper', fact)
+    print 'Previous knowledge retracted...'
+    rate.sleep() # Sleeps for 1/rate sec
+    print 'Thinking completed'
     
 def think():
     # learn('behaviour.pl')  # Pyswip is not compatible
     rospy.init_node('think')
     datalogLearning('root/catkin_ws/src/kobukiROSindigo/src/behaviour.dl')
-    rospy.Subscriber("/kobuki_status", Status, updateCallbackDatalog)
+    rospy.Subscriber("/kobuki_status", Status, speecunialityCallbackDatalog)
     rospy.spin()
 
 if __name__ == '__main__':
