@@ -31,6 +31,7 @@ pubKobukiVelocity = rospy.Publisher('kobuki_velocity', Twist, queue_size=1)
 kobukiStatus = Status()  # The updated status of the robot
 prologEngine = Prolog()
 kobukiDecisionVelocity = Twist()
+bumperEventList = []
 
 def learn(prologFilePath):  # Function not used because Pyswip is not compatible
     '''
@@ -166,12 +167,22 @@ def datalogLearning(self, filePath = 'behaviour.dl'):
     load(rules)
     
 # The following function uses Datalog 
-def decisionCallbackDatalog(kobukiStatus):
+def updateCallbackDatalog(kobukiStatus):
     print 'Decision taking started...'
     west = kobukiStatus.bumperW
     north = kobukiStatus.bumperN
     east = kobukiStatus.bumperE
     perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', east]]
+    bumperEventList.append(perceptionBumper)   
+    
+# The following function uses Datalog     
+def decisionDatalog():
+    print 'Decision taking started...'
+    west = kobukiStatus.bumperW
+    north = kobukiStatus.bumperN
+    east = kobukiStatus.bumperE
+    perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', east]]
+    bumperEventList.append(perceptionBumper)
     print(perceptionBumper)
     fact = str(perceptionBumper).replace('"', "'")
     print 'Fact: ' + fact
@@ -211,13 +222,13 @@ def decisionCallbackDatalog(kobukiStatus):
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))
     prologEngine.retractall('perceptionBumper(_)')
-    print 'Previous knowledge retracted...'    
+    print 'Previous knowledge retracted...' 
     
 def think():
     # learn('behaviour.pl')  # Pyswip is not compatible
     rospy.init_node('think')
     datalogLearning('root/catkin_ws/src/kobukiROSindigo/src/behaviour.dl')
-    rospy.Subscriber("/kobuki_status", Status, decisionCallbackDatalog)
+    rospy.Subscriber("/kobuki_status", Status, updateCallbackDatalog)
     rospy.spin()
 
 if __name__ == '__main__':
