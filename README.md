@@ -31,12 +31,13 @@ cd packages/clpqr
 ./configure --prefix=/usr --enable-shared $ make && sudo make install
 sudo ln -s /usr/lib/pl-5.6.34/lib/i686-linux/libpl.so.5.6.34 /usr/lib/libpl.so 
 ```
-2. Install the Python needed library:
+2. Install the Python needed libraries:
 ```sh
 cd ../../..
 git clone https://github.com/yuce/pyswip.git
 cd pyswip
 python setup.py install
+pip install pyDatalog
 ```
 3. If you don't have a  catkin workspace, create one:
 ```sh
