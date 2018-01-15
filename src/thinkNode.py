@@ -207,7 +207,7 @@ def think():
     # learn('behaviour.pl')  # Pyswip is not compatible
     rospy.init_node('think')
     datalogLearning('behaviour.dl')
-    rospy.Subscriber("/kobuki_status", Status, decisionCallbackPy)
+    rospy.Subscriber("/kobuki_status", Status, decisionCallbackDatalog)
     rospy.spin()
 
 if __name__ == '__main__':
