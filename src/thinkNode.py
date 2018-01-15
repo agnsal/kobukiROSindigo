@@ -198,7 +198,6 @@ def speecunialityCallbackDatalog(kobukiStatus):
     print(perceptionBumper)
     fact = str(perceptionBumper).replace('"', "'")
     print 'Fact: ' + fact
-    rospy.
     pyDatalog.assert_fact('perceptionBumper', fact) #  Asserts a new fact
     print 'New knowledge taken...'
     rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
