@@ -158,13 +158,16 @@ def decisionCallbackPy(kobukiStatus):
 
 # The following function uses Datalog 
 def datalogLearning(self, filePath = 'behaviour.dl'):
+    pyDatalog.create_terms('D')
+    pyDatalog.create_terms('N')
+    pyDatalog.create_terms('W')
+    pyDatalog.create_terms('E')
     rules = open(filePath).read()
     load(rules)
     
 # The following function uses Datalog 
 def decisionCallbackDatalog(kobukiStatus):
     print 'Decision taking started...'
-    pyDatalog.create_terms('D')
     west = kobukiStatus.bumperW
     north = kobukiStatus.bumperN
     east = kobukiStatus.bumperE
