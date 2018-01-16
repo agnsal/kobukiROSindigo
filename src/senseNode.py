@@ -27,15 +27,6 @@ kobukiStatus = Status()  # The updated status of the robot
 bridge = cv_bridge.CvBridge()
 cv2.namedWindow("robotView", 1)
 
-kobukiStatus.odometryX = 0
-kobukiStatus.odometryY = 0
-kobukiStatus.odometryZ = 0
-kobukiStatus.bumperE = False
-kobukiStatus.bumperW = False
-kobukiStatus.bumperN = False
-kobukiStatus.lastTime = 0
-kobukiStatus.deltaTime = 0.5
-
 def cameraCallback(data):
     sUnixTimestamp = int(time.time())  # Timestamp in seconds
     if sUnixTimestamp - kobukiStatus.lastTime > kobukiStatus.deltaTime:
@@ -113,6 +104,8 @@ def sense():
   
 if __name__ == '__main__':
     try:
+        kobukiStatus.lastTime = 0
+        kobukiStatus.deltaTime = 0.5
         sense()
     except rospy.ROSInterruptException:
         pass
