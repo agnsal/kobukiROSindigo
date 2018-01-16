@@ -17,41 +17,20 @@ import rospy
 import math
 import random
 import os
-from pyswip import Prolog
 from pyDatalog import pyEngine
 from pyDatalog import pyDatalog
 from geometry_msgs.msg import Twist
 from kobukiROSindigo.msg import Status
-from threading import Thread
 import logging
 
 logging.basicConfig(level=logging.INFO)
-
-class thinkingThread(Thread):
-    def __init__(self, callback):
-        Thread.__init__(self)
-        self.callback = callback
-
-    def run(self):
-        data = "hello"
-        self.callback(data)
-
-
-class Manager():
-    def Test(self):
-        MyThread(self.on_thread_finished).start()
-
-    def on_thread_finished(self, data):
-        print "on_thread_finished:", data
-
 
 pubKobukiVelocity = rospy.Publisher('kobuki_velocity', Twist, queue_size=1)
 kobukiStatus = Status()  # The updated status of the robot
 prologEngine = Prolog()
 kobukiDecisionVelocity = Twist()
-bumperEventList = []
 
-def learn(prologFilePath):  # Function not used because Pyswip is not compatible
+def learn(prologFilePath):  # Function not used here because Pyswip is not compatible with ROS loop
     '''
     Learns from a SWI Prolog file.
     :param prologFilePath: The path of the Prolog (.pl or .txt) file we need to use.
@@ -62,7 +41,7 @@ def learn(prologFilePath):  # Function not used because Pyswip is not compatible
     prologEngine.consult(prologFilePath)
     print 'Learning finished'
 
-# The following function gives the "Segmentation fault (core dumped)" error because of Pyswip
+# Used here, the following function gives the "Segmentation fault (core dumped)" error because of Pyswip, so it's not used
 def decisionCallback(kobukiStatus):
     print 'Decision taking started...'
     west = kobukiStatus.bumperW
@@ -88,15 +67,15 @@ def decisionCallback(kobukiStatus):
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 0.0
     elif toDo == 'TurnEast':
-        kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
+        kobukiDecisionVelocity.linear.x = -0.3  # Go back at 0.3 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
     elif toDo == 'TurnWest':
-        kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
+        kobukiDecisionVelocity.linear.x = -0.3  # Go back at 0.3 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 1  # Turn Left at 1 rad/s
     elif toDo == 'TurnSouth':
-        kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
+        kobukiDecisionVelocity.linear.x = -0.3  # Go back at 0.1 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
     else:  # toDo == 'Stay'
@@ -113,7 +92,7 @@ def decisionCallbackRandomPy(kobukiStatus):
     luck = random.randint(0,3)
     if luck == 1:  #  Casual move
         luckyPi = random.randint(1,4)
-        kobukiDecisionVelocity.linear.x = -0.1
+        kobukiDecisionVelocity.linear.x = -0.3
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = luckyPi*(-1.5)
     else:
@@ -127,15 +106,15 @@ def decisionCallbackRandomPy(kobukiStatus):
             kobukiDecisionVelocity.angular.z = 0.0
             pubKobukiVelocity.publish(kobukiDecisionVelocity)
         elif east is False:
-            kobukiDecisionVelocity.linear.x = -0.1
+            kobukiDecisionVelocity.linear.x = -0.3
             kobukiDecisionVelocity.linear.y = 0.0
             kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
         elif west is False:
-            kobukiDecisionVelocity.linear.x = -0.1
+            kobukiDecisionVelocity.linear.x = -0.3
             kobukiDecisionVelocity.linear.y = 0.0
             kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 1rad/s
         elif (north and east and west):
-            kobukiDecisionVelocity.linear.x = -0.1 
+            kobukiDecisionVelocity.linear.x = -0.3 
             kobukiDecisionVelocity.linear.y = 0.0
             kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
         else:  # stay
@@ -157,15 +136,15 @@ def decisionCallbackPy(kobukiStatus):
         kobukiDecisionVelocity.angular.z = 0.0
         pubKobukiVelocity.publish(kobukiDecisionVelocity)
     elif east is False:
-        kobukiDecisionVelocity.linear.x = -0.1
+        kobukiDecisionVelocity.linear.x = -0.3
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
     elif west is False:
-        kobukiDecisionVelocity.linear.x = -0.1
+        kobukiDecisionVelocity.linear.x = -0.3
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 1.0  # Turn Left at 1rad/s
     elif (north and east and west):
-        kobukiDecisionVelocity.linear.x = -0.1 
+        kobukiDecisionVelocity.linear.x = -0.3 
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
     else:  # stay
@@ -224,15 +203,15 @@ def speecunialityCallbackDatalog(kobukiStatus):
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 0.0
     elif 'TurnEast' in toDo:
-        kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
+        kobukiDecisionVelocity.linear.x = -0.3  # Go back at 0.1 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
     elif 'TurnWest' in toDo:
-        kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
+        kobukiDecisionVelocity.linear.x = -0.3  # Go back at 0.1 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 1  # Turn Left at 1 rad/s
     elif 'TurnSouth' in toDo:
-        kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
+        kobukiDecisionVelocity.linear.x = -0.3  # Go back at 0.1 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
     else:  # toDo == 'Stay'
