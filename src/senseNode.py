@@ -27,6 +27,15 @@ kobukiStatus = Status()  # The updated status of the robot
 bridge = cv_bridge.CvBridge()
 cv2.namedWindow("robotView", 1)
 
+kobukiStatus.odometryX = 0
+kobukiStatus.odometryY = 0
+kobukiStatus.odometryZ = 0
+kobukiStatus.bumperE = False
+kobukiStatus.bumperW = False
+kobukiStatus.bumperN = False
+lastTime = 0
+deltaTime = 2
+
 def cameraCallback(data):
     sUnixTimestamp = int(time.time())  # Timestamp in seconds
     image = bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
@@ -35,11 +44,14 @@ def cameraCallback(data):
     rospy.loginfo('cameraTimestamp: {}'.format(sUnixTimestamp))
 
 def odometryCallback(data):
+    sUnixTimestamp = int(time.time())  # Timestamp in seconds
     kobukiStatus.odometryX = data.pose.pose.position.x
     kobukiStatus.odometryY = data.pose.pose.position.y
     kobukiStatus.odometryZ = data.pose.pose.position.z
-    pubKobukiStatus.publish(kobukiStatus)
-    rospy.loginfo('x: {}, y: {}, z: {}'.format(kobukiStatus.odometryX, kobukiStatus.odometryY, kobukiStatus.odometryZ))
+    if sUnixTimestamp - lastTime < deltaTime:
+        pubKobukiStatus.publish(kobukiStatus)
+        rospy.loginfo('x: {}, y: {}, z: {}'.format(kobukiStatus.odometryX, kobukiStatus.odometryY, kobukiStatus.odometryZ))
+        lastTime = int(time.time())
     
 def bumperCallback(data):
     state = data.state
@@ -53,9 +65,11 @@ def bumperCallback(data):
         kobukiStatus.bumperN = state
     else:   
         kobukiStatus.bumperE = state
-    pubKobukiStatus.publish(kobukiStatus)
-    rospy.loginfo('bumperW: {}, bumberN: {}, bumperE: {}'.format(kobukiStatus.bumperW, kobukiStatus.bumperN, kobukiStatus.bumperE))
-
+    if sUnixTimestamp - lastTime < deltaTime:
+        pubKobukiStatus.publish(kobukiStatus)
+        rospy.loginfo('bumperW: {}, bumberN: {}, bumperE: {}'.format(kobukiStatus.bumperW, kobukiStatus.bumperN, kobukiStatus.bumperE))
+        lastTime = int(time.time())
+        
 def powerCallback(data):
     if   ( data.event == PowerSystemEvent.UNPLUGGED ) :
         kobukiStatus.power = PowerSystemEvent.UNPLUGGED
@@ -77,8 +91,10 @@ def powerCallback(data):
         rospy.loginfo("Robot battery critical")
     else:
         rospy.loginfo("WARN: Unexpected power system event: %d"%(data.event))
-    pubKobukiStatus.publish(kobukiStatus)
-    rospy.loginfo('power: {}'.format(kobukiStatus.power))
+    if sUnixTimestamp - lastTime < deltaTime:
+        pubKobukiStatus.publish(kobukiStatus)
+        rospy.loginfo('power: {}'.format(kobukiStatus.power))
+        lastTime = int(time.time())
     
 def sense():
     rospy.init_node('sense')
