@@ -41,32 +41,18 @@ takeDecision('TurnEast') <= hasValue('bumperN', 'True') & hasValue('bumperE', 'F
 # pyDatalog.load(rules)
 print("Learning finished")
 
-def patientQuery():
+def eternity():
+    print('Loop started')
+    
     while(True):
         patience = True
         while(patience):
           try:
-              open('query.txt')
+              inFile = open('query.txt')
               patience = False
           except:
               print("Query file not found, waiting...")
               time.sleep(0.1)
-            
-def patientResponse():
-    while(True):
-        patience = True
-        while(patience):
-          try:
-              open('response.txt')
-              time.sleep(0.1)
-          except:
-              print("Standby")
-              patience = False
-
-def eternity():
-    print('Loop started')
-    while(True):
-        patientQuery()
 
         # Keep data from file
         inFile = open('query.txt')
@@ -93,7 +79,6 @@ def eternity():
         outFile.write(result + '\n')
         outFile.close()
         
-        patientResponse()
         os.remove('query.txt')
 
 eternity()
