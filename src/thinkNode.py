@@ -180,7 +180,7 @@ def waitForDevilResponse():
     patience = True
     while(patience):
         try:
-            response = open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
+            open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
             patience = False
         except:
             print 'Waiting for Devil response...'
@@ -191,7 +191,7 @@ def waitForDevilReady():
     patience = True
     while(patience):
         try:
-            response = open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
+            open('root/catkin_ws/src/kobukiROSindigo/src/query.txt')
             trospy.sleep(0.1)
         except:
             patience = False
