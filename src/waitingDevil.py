@@ -92,7 +92,7 @@ def eternity():
         outFile.write(result + '\n')
         outFile.close()
         
-        os.remove('query.txt')
+        os.remove('root/catkin_ws/src/kobukiROSindigo/src/query.txt')
         patientResponse()
 
 eternity()
