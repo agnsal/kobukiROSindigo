@@ -49,11 +49,13 @@ def odometryCallback(data):
     kobukiStatus.odometryY = data.pose.pose.position.y
     kobukiStatus.odometryZ = data.pose.pose.position.z
     if sUnixTimestamp - kobukiStatus.lastTime < kobukiStatus.deltaTime:
+        print 'Delta time ok: ' + str(sUnixTimestamp - kobukiStatus.lastTime)
         pubKobukiStatus.publish(kobukiStatus)
         rospy.loginfo('x: {}, y: {}, z: {}'.format(kobukiStatus.odometryX, kobukiStatus.odometryY, kobukiStatus.odometryZ))
         kobukiStatus.lastTime = int(time.time())
     
 def bumperCallback(data):
+    sUnixTimestamp = int(time.time())  # Timestamp in seconds
     state = data.state
     bumper = data.bumper
     kobukiStatus.bumperE = False
@@ -66,11 +68,13 @@ def bumperCallback(data):
     else:   
         kobukiStatus.bumperE = state
     if sUnixTimestamp - kobukiStatus.lastTime < kobukiStatus.deltaTime:
+        print 'Delta time ok: ' + str(sUnixTimestamp - kobukiStatus.lastTime)
         pubKobukiStatus.publish(kobukiStatus)
         rospy.loginfo('bumperW: {}, bumberN: {}, bumperE: {}'.format(kobukiStatus.bumperW, kobukiStatus.bumperN, kobukiStatus.bumperE))
         kobukiStatus.lastTime = int(time.time())
         
 def powerCallback(data):
+    sUnixTimestamp = int(time.time())  # Timestamp in seconds
     if   ( data.event == PowerSystemEvent.UNPLUGGED ) :
         kobukiStatus.power = PowerSystemEvent.UNPLUGGED
         rospy.loginfo("Robot unplugged")
@@ -92,6 +96,7 @@ def powerCallback(data):
     else:
         rospy.loginfo("WARN: Unexpected power system event: %d"%(data.event))
     if sUnixTimestamp - kobukiStatus.lastTime < kobukiStatus.deltaTime:
+        print 'Delta time ok: ' + str(sUnixTimestamp - kobukiStatus.lastTime)
         pubKobukiStatus.publish(kobukiStatus)
         rospy.loginfo('power: {}'.format(kobukiStatus.power))
         kobukiStatus.lastTime = int(time.time())
