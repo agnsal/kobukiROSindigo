@@ -47,7 +47,7 @@ def eternity():
         patience = True
         while(patience):
           try:
-              inFile = open('query.txt')
+              inFile = open('root/catkin_ws/src/kobukiROSindigo/src/query.txt')
               patience = False
           except:
               print("Query file not found, waiting...")
@@ -74,7 +74,7 @@ def eternity():
         - perceptionBumper(factList) #  Retract the fact
 
         # Put data on file
-        outFile = open("response.txt", "w")
+        outFile = open("root/catkin_ws/src/kobukiROSindigo/src/response.txt", "w")
         outFile.write(result + '\n')
         outFile.close()
 
