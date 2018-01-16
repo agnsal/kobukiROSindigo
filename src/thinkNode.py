@@ -27,7 +27,7 @@ logging.basicConfig(level=logging.INFO)
 
 pubKobukiVelocity = rospy.Publisher('kobuki_velocity', Twist, queue_size=1)
 kobukiStatus = Status()  # The updated status of the robot
-prologEngine = Prolog()
+# prologEngine = Prolog()
 kobukiDecisionVelocity = Twist()
 
 def learn(prologFilePath):  # Function not used here because Pyswip is not compatible with ROS loop
