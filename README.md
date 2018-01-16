@@ -37,7 +37,7 @@ cd ../../..
 git clone https://github.com/yuce/pyswip.git
 cd pyswip
 python setup.py install
-pip install pyDatalog
+pip3 install pyDatalog
 ```
 3. If you don't have a  catkin workspace, create one:
 ```sh
@@ -73,6 +73,7 @@ mv kobukiROSindigo/package.xml src/kobukiROSindigo/
 mv kobukiROSindigo/CMakeLists.txt src/kobukiROSindigo/
 rm -r kobukiROSindigo
 catkin_make  
+echo "source devel/setup.bash" >> ~/.bashrc
 ```
 7. To avoid errors with OpenCV library:
 ```sh
@@ -84,11 +85,14 @@ cd ~/catkin_ws/src/kobukiROSindigo/src
 chmod +x senseNode.py
 chmod +x thinkNode.py
 chmod +x actNode.py 
+chmod +x waitingDevil.py
 ```
 9. To run the scripts (use a terminal window for each one) on the physical robot or on the simulation robot (that has to be launched in a separated terminal window using the command ``` roslaunch turtlebot_gazebo turtlebot_world.launch ```):
 ```sh
-rosrun kobukiROSindigo senseNode.py
+cd ~/catkin_ws/src/kobukiROSindigo/src
+python3 waitingDevil.py
 rosrun kobukiROSindigo thinkNode.py
+rosrun kobukiROSindigo senseNode.py
 rosrun kobukiROSindigo actNode.py
 ```
 
