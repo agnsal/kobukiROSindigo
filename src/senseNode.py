@@ -38,17 +38,19 @@ kobukiStatus.deltaTime = 2
 
 def cameraCallback(data):
     sUnixTimestamp = int(time.time())  # Timestamp in seconds
-    image = bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
-    cv2.imshow("robotView", image)
-    cv2.waitKey(3)  # Display a frame for 3 ms
-    rospy.loginfo('cameraTimestamp: {}'.format(sUnixTimestamp))
+    if sUnixTimestamp - kobukiStatus.lastTime > kobukiStatus.deltaTime:
+        image = bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
+        cv2.imshow("robotView", image)
+        cv2.waitKey(3)  # Display a frame for 3 ms
+        rospy.loginfo('cameraTimestamp: {}'.format(sUnixTimestamp))
+        kobukiStatus.lastTime = int(time.time())
 
 def odometryCallback(data):
     sUnixTimestamp = int(time.time())  # Timestamp in seconds
     kobukiStatus.odometryX = data.pose.pose.position.x
     kobukiStatus.odometryY = data.pose.pose.position.y
     kobukiStatus.odometryZ = data.pose.pose.position.z
-    if sUnixTimestamp - kobukiStatus.lastTime < kobukiStatus.deltaTime:
+    if sUnixTimestamp - kobukiStatus.lastTime > kobukiStatus.deltaTime:
         print 'Delta time ok: ' + str(sUnixTimestamp - kobukiStatus.lastTime)
         pubKobukiStatus.publish(kobukiStatus)
         rospy.loginfo('x: {}, y: {}, z: {}'.format(kobukiStatus.odometryX, kobukiStatus.odometryY, kobukiStatus.odometryZ))
@@ -67,7 +69,7 @@ def bumperCallback(data):
         kobukiStatus.bumperN = state
     else:   
         kobukiStatus.bumperE = state
-    if sUnixTimestamp - kobukiStatus.lastTime < kobukiStatus.deltaTime:
+    if sUnixTimestamp - kobukiStatus.lastTime > kobukiStatus.deltaTime:
         print 'Delta time ok: ' + str(sUnixTimestamp - kobukiStatus.lastTime)
         pubKobukiStatus.publish(kobukiStatus)
         rospy.loginfo('bumperW: {}, bumberN: {}, bumperE: {}'.format(kobukiStatus.bumperW, kobukiStatus.bumperN, kobukiStatus.bumperE))
@@ -95,7 +97,7 @@ def powerCallback(data):
         rospy.loginfo("Robot battery critical")
     else:
         rospy.loginfo("WARN: Unexpected power system event: %d"%(data.event))
-    if sUnixTimestamp - kobukiStatus.lastTime < kobukiStatus.deltaTime:
+    if sUnixTimestamp - kobukiStatus.lastTime > kobukiStatus.deltaTime:
         print 'Delta time ok: ' + str(sUnixTimestamp - kobukiStatus.lastTime)
         pubKobukiStatus.publish(kobukiStatus)
         rospy.loginfo('power: {}'.format(kobukiStatus.power))
