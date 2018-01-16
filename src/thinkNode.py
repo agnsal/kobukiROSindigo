@@ -176,7 +176,7 @@ def decisionCallbackPy(kobukiStatus):
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))    
 
-def waitForDevil():
+def waitForDevilResponse():
     print 'Waiting for response...'
     patience = True
     while(patience):
@@ -184,8 +184,19 @@ def waitForDevil():
             response = open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
             patience = False
         except:
-            print 'Waiting for Devil...'
+            print 'Waiting for Devil response...'
             time.sleep(0.1)
+
+def waitForDevilReady():
+    print 'Waiting for attention...'
+    patience = True
+    while(patience):
+        try:
+            response = open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
+            time.sleep(0.1)
+        except:
+            patience = False
+            print 'Devil is available'
     
 # The following function uses Datalog 
 def speecunialityCallbackDatalog(kobukiStatus):
@@ -198,11 +209,12 @@ def speecunialityCallbackDatalog(kobukiStatus):
     print 'Decision taking started...'
     bumperFact = str(perceptionBumper).replace('"', "'")
     print 'Fact: ' + bumperFact
+    waitForDevilReady()
     # Put data on query file
     outFile = open("root/catkin_ws/src/kobukiROSindigo/src/query.txt", "w")
     outFile.write(bumperFact + '\n')
     outFile.close()
-    waitForDevil()
+    waitForDevilResponse()
     print 'Devil wrote back'
     response = open('response.txt')
     toDo = response.readline()
