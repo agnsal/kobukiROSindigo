@@ -41,8 +41,7 @@ takeDecision('TurnEast') <= hasValue('bumperN', 'True') & hasValue('bumperE', 'F
 # pyDatalog.load(rules)
 print("Learning finished")
 
-def eternity():
-    print('Loop started')
+def patientQuery():
     while(True):
         patience = True
         while(patience):
@@ -52,13 +51,27 @@ def eternity():
           except:
               print("Query file not found, waiting...")
               time.sleep(0.1)
+            
+def patientResponse():
+    while(True):
+        patience = True
+        while(patience):
+          try:
+              inFile = open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
+              time.sleep(0.1)
+          except:
+              print("Standby")
+              patience = False
+
+def eternity():
+    print('Loop started')
+    patientQuery()
 
         # Keep data from file
         fact = []
         line = inFile.readline()
         factList = ast.literal_eval(line)
         inFile.close()
-        os.remove('query.txt')
 
         print('FactList: ', factList)
         + perceptionBumper(factList) #  Asserts a new fact
@@ -77,5 +90,8 @@ def eternity():
         outFile = open("root/catkin_ws/src/kobukiROSindigo/src/response.txt", "w")
         outFile.write(result + '\n')
         outFile.close()
+        
+        os.remove('query.txt')
+        patientResponse()
 
 eternity()
