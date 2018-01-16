@@ -219,19 +219,19 @@ def speecunialityCallbackDatalog(kobukiStatus):
     toDo = response.readline()
     response.close()
     print 'Davil said: ' + toDo
-    if toDo == 'GoStraight':
+    if 'GoStraight' in toDo:
         kobukiDecisionVelocity.linear.x = 0.15 # Go forward at 0.15 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 0.0
-    elif toDo == 'TurnEast':
+    elif 'TurnEast' in toDo:
         kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = -1.0  # Turn Right at 1 rad/s
-    elif toDo == 'TurnWest':
+    elif 'TurnWest' in toDo:
         kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 1  # Turn Left at 1 rad/s
-    elif toDo == 'TurnSouth':
+    elif 'TurnSouth' in toDo:
         kobukiDecisionVelocity.linear.x = -0.1  # Go back at 0.1 m/s
         kobukiDecisionVelocity.linear.y = 0.0
         kobukiDecisionVelocity.angular.z = 4.0  # Turn Left at 4 rad/s
