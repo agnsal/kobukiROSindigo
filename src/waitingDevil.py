@@ -46,7 +46,7 @@ def patientQuery():
         patience = True
         while(patience):
           try:
-              inFile = open('root/catkin_ws/src/kobukiROSindigo/src/query.txt')
+              open('root/catkin_ws/src/kobukiROSindigo/src/query.txt')
               patience = False
           except:
               print("Query file not found, waiting...")
@@ -57,7 +57,7 @@ def patientResponse():
         patience = True
         while(patience):
           try:
-              inFile = open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
+              open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
               time.sleep(0.1)
           except:
               print("Standby")
@@ -69,6 +69,7 @@ def eternity():
         patientQuery()
 
         # Keep data from file
+        inFile = open('root/catkin_ws/src/kobukiROSindigo/src/query.txt')
         fact = []
         line = inFile.readline()
         factList = ast.literal_eval(line)
@@ -92,7 +93,7 @@ def eternity():
         outFile.write(result + '\n')
         outFile.close()
         
-        os.remove('root/catkin_ws/src/kobukiROSindigo/src/query.txt')
         patientResponse()
+        os.remove('root/catkin_ws/src/kobukiROSindigo/src/query.txt')
 
 eternity()
