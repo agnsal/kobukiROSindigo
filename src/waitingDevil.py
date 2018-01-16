@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and limitations 
 '''
 
 import os
+import time
 from pyDatalog import pyEngine
 from pyDatalog import pyDatalog
 import logging
@@ -50,6 +51,7 @@ def eternity():
               patience = False
           except:
               print("Query file not found, waiting...")
+              time.sleep(0.1)
 
         # Keep data from file
         fact = []
