@@ -216,7 +216,7 @@ def speecunialityCallbackDatalog(kobukiStatus):
     outFile.close()
     waitForDevilResponse()
     print 'Devil wrote back'
-    response = open('response.txt')
+    response = open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
     toDo = response.readline()
     response.close()
     print 'Davil said: ' + toDo
