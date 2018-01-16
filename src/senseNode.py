@@ -34,7 +34,7 @@ kobukiStatus.bumperE = False
 kobukiStatus.bumperW = False
 kobukiStatus.bumperN = False
 kobukiStatus.lastTime = 0
-kobukiStatus.deltaTime = 2
+kobukiStatus.deltaTime = 0.5
 
 def cameraCallback(data):
     sUnixTimestamp = int(time.time())  # Timestamp in seconds
