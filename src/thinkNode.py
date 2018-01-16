@@ -183,7 +183,6 @@ def speecunialityCallbackDatalog(kobukiStatus):
     north = kobukiStatus.bumperN
     east = kobukiStatus.bumperE
     perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', east]]
-    bumperEventList.append(perceptionBumper)
     print 'Decision taking started...'
     bumperFact = str(perceptionBumper).replace('"', "'")
     print 'Fact: ' + bumperFact
