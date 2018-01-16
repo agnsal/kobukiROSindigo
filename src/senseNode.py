@@ -33,8 +33,8 @@ kobukiStatus.odometryZ = 0
 kobukiStatus.bumperE = False
 kobukiStatus.bumperW = False
 kobukiStatus.bumperN = False
-lastTime = 0
-deltaTime = 2
+kobukiStatus.lastTime = 0
+kobukiStatus.deltaTime = 2
 
 def cameraCallback(data):
     sUnixTimestamp = int(time.time())  # Timestamp in seconds
@@ -48,10 +48,10 @@ def odometryCallback(data):
     kobukiStatus.odometryX = data.pose.pose.position.x
     kobukiStatus.odometryY = data.pose.pose.position.y
     kobukiStatus.odometryZ = data.pose.pose.position.z
-    if sUnixTimestamp - lastTime < deltaTime:
+    if sUnixTimestamp - kobukiStatus.lastTime < kobukiStatus.deltaTime:
         pubKobukiStatus.publish(kobukiStatus)
         rospy.loginfo('x: {}, y: {}, z: {}'.format(kobukiStatus.odometryX, kobukiStatus.odometryY, kobukiStatus.odometryZ))
-        lastTime = int(time.time())
+        kobukiStatus.lastTime = int(time.time())
     
 def bumperCallback(data):
     state = data.state
@@ -65,10 +65,10 @@ def bumperCallback(data):
         kobukiStatus.bumperN = state
     else:   
         kobukiStatus.bumperE = state
-    if sUnixTimestamp - lastTime < deltaTime:
+    if sUnixTimestamp - kobukiStatus.lastTime < kobukiStatus.deltaTime:
         pubKobukiStatus.publish(kobukiStatus)
         rospy.loginfo('bumperW: {}, bumberN: {}, bumperE: {}'.format(kobukiStatus.bumperW, kobukiStatus.bumperN, kobukiStatus.bumperE))
-        lastTime = int(time.time())
+        kobukiStatus.lastTime = int(time.time())
         
 def powerCallback(data):
     if   ( data.event == PowerSystemEvent.UNPLUGGED ) :
@@ -91,10 +91,10 @@ def powerCallback(data):
         rospy.loginfo("Robot battery critical")
     else:
         rospy.loginfo("WARN: Unexpected power system event: %d"%(data.event))
-    if sUnixTimestamp - lastTime < deltaTime:
+    if sUnixTimestamp - kobukiStatus.lastTime < kobukiStatus.deltaTime:
         pubKobukiStatus.publish(kobukiStatus)
         rospy.loginfo('power: {}'.format(kobukiStatus.power))
-        lastTime = int(time.time())
+        kobukiStatus.lastTime = int(time.time())
     
 def sense():
     rospy.init_node('sense')
