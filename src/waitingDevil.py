@@ -67,6 +67,7 @@ def eternity():
         cleanResponseList = cleanResponse.split(',),(')
         print('Clean Response List: ', cleanResponseList)
         result = cleanResponseList[0]
+        - perceptionBumper(factList) #  Retract the fact
 
         # Put data on file
         outFile = open("response.txt", "w")
