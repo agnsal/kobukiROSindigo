@@ -159,7 +159,7 @@ def waitForDevilResponse():
     patience = True
     while(patience):
         try:
-            open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
+            open('response.txt')
             patience = False
         except:
             print 'Waiting for Devil response...'
@@ -170,7 +170,7 @@ def waitForDevilReady():
     patience = True
     while(patience):
         try:
-            open('root/catkin_ws/src/kobukiROSindigo/src/query.txt')
+            open('query.txt')
             trospy.sleep(0.1)
         except:
             patience = False
@@ -188,12 +188,12 @@ def speecunialityCallbackDatalog(kobukiStatus):
     print 'Fact: ' + bumperFact
     waitForDevilReady()
     # Put data on query file
-    outFile = open("root/catkin_ws/src/kobukiROSindigo/src/query.txt", "w")
+    outFile = open("query.txt", "w")
     outFile.write(bumperFact + '\n')
     outFile.close()
     waitForDevilResponse()
     print 'Devil wrote back'
-    response = open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
+    response = open('response.txt')
     toDo = response.readline()
     response.close()
     print 'Davil said: ' + toDo
@@ -220,7 +220,7 @@ def speecunialityCallbackDatalog(kobukiStatus):
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))
     print 'Thinking completed'
-    os.remove('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
+    os.remove('response.txt')
     print 'Previous knowledge retracted...'
     
 def think():
