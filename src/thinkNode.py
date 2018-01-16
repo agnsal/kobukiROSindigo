@@ -237,7 +237,6 @@ def speecunialityCallbackDatalog(kobukiStatus):
 def think():
     # learn('behaviour.pl')  # Pyswip is not compatible
     rospy.init_node('think')
-    datalogLearning('root/catkin_ws/src/kobukiROSindigo/src/behaviour.dl')
     rospy.Subscriber("/kobuki_status", Status, speecunialityCallbackDatalog)
     rospy.spin()
 
