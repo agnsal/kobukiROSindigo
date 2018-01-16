@@ -1,11 +1,8 @@
-hasValue('bumperW', W) <= perceptionBumper([['bumperW', W], _, _])
-hasValue('bumperN', N) <= perceptionBumper([_, ['bumperN', N], _])
-hasValue('bumperE', E) <= perceptionBumper([_, _, ['bumperE', E]])
+hasValue('bumperW', W) <= perceptionBumper([['bumperW', W], X, Y])
+hasValue('bumperN', N) <= perceptionBumper([X, ['bumperN', N], Y])
+hasValue('bumperE', E) <= perceptionBumper([X, Y, ['bumperE', E]])
 
 takeDecision('TurnSouth') <= hasValue('bumperN', 'True') & hasValue('bumperW', 'True') & hasValue('bumperE', 'True')
-
 takeDecision('GoStraight') <= hasValue('bumperN', 'False') & hasValue('bumperW', 'False') & hasValue('bumperE', 'False')
-
-takeDecision('TurnWest') <= hasValue('bumperW', 'False')
-
-takeDecision('TurnEast') <= hasValue('bumperE', 'False')
+takeDecision('TurnWest') <= hasValue('bumperN', 'True') & hasValue('bumperW', 'False')
+takeDecision('TurnEast') <= hasValue('bumperN', 'True') & hasValue('bumperE', 'False')
