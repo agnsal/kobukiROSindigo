@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and limitations 
 
 import rospy
 import math
-import time
 import random
 import os
 from pyswip import Prolog
@@ -185,7 +184,7 @@ def waitForDevilResponse():
             patience = False
         except:
             print 'Waiting for Devil response...'
-            time.sleep(0.1)
+            rospy.sleep(0.1)
 
 def waitForDevilReady():
     print 'Waiting for attention...'
@@ -193,7 +192,7 @@ def waitForDevilReady():
     while(patience):
         try:
             response = open('root/catkin_ws/src/kobukiROSindigo/src/response.txt')
-            time.sleep(0.1)
+            trospy.sleep(0.1)
         except:
             patience = False
             print 'Devil is available'
