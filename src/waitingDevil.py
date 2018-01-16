@@ -58,21 +58,25 @@ def eternity():
         inFile = open('query.txt')
         fact = []
         line = inFile.readline()
-        factList = ast.literal_eval(line)
-        inFile.close()
+        try:
+            factList = ast.literal_eval(line)
+            inFile.close()
 
-        print('FactList: ', factList)
-        + perceptionBumper(factList) #  Asserts a new fact
-        print("New knowledge taken")
-        print("Taking a decision...")
-        response = str(pyDatalog.ask("takeDecision(D)"))
-        print("Decision taken")
-        # print(response)
-        cleanResponse = response.replace(' ', '').replace('{(', '').replace(',)}', '')
-        cleanResponseList = cleanResponse.split(',),(')
-        print('Clean Response List: ', cleanResponseList)
-        result = cleanResponseList[0]
-        - perceptionBumper(factList) #  Retract the fact
+            print('FactList: ', factList)
+            + perceptionBumper(factList) #  Asserts a new fact
+            print("New knowledge taken")
+            print("Taking a decision...")
+            response = str(pyDatalog.ask("takeDecision(D)"))
+            print("Decision taken")
+            # print(response)
+            cleanResponse = response.replace(' ', '').replace('{(', '').replace(',)}', '')
+            cleanResponseList = cleanResponse.split(',),(')
+            print('Clean Response List: ', cleanResponseList)
+            result = cleanResponseList[0]
+            - perceptionBumper(factList) #  Retract the fact
+        except:
+            print('Bad data as input')
+            result = 'Stay'
 
         # Put data on file
         outFile = open("response.txt", "w")
