@@ -68,9 +68,9 @@ def eternity():
         print('Clean Response List: ', cleanResponseList)
         result = cleanResponseList[0]
 
-    # Put data on file
-    outFile = open("response.txt", "w")
-    outFile.write(result + '\n')
-    outFile.close()
+        # Put data on file
+        outFile = open("response.txt", "w")
+        outFile.write(result + '\n')
+        outFile.close()
 
 eternity()
