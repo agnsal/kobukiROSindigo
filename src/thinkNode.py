@@ -17,6 +17,7 @@ import rospy
 import math
 import time
 import random
+import os
 from pyswip import Prolog
 from pyDatalog import pyEngine
 from pyDatalog import pyDatalog
@@ -175,14 +176,16 @@ def decisionCallbackPy(kobukiStatus):
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))    
 
-# The following function uses Datalog 
-def datalogLearning(self, filePath = 'behaviour.dl'):
-    pyDatalog.create_terms('D')
-    pyDatalog.create_terms('N')
-    pyDatalog.create_terms('W')
-    pyDatalog.create_terms('E')
-    rules = open(filePath).read()
-    pyDatalog.load(rules)
+def waitForDevil():
+    print 'Waiting for response...'
+    patience = True
+    while(patience):
+        try:
+            response = open('response.txt')
+            patience = False
+        except:
+            print 'Waiting for Devil...'
+            time.sleep(0.1)
     
 # The following function uses Datalog 
 def speecunialityCallbackDatalog(kobukiStatus):
@@ -192,25 +195,19 @@ def speecunialityCallbackDatalog(kobukiStatus):
     east = kobukiStatus.bumperE
     perceptionBumper = [['bumperW', west], ['bumperN', north], ['bumperE', east]]
     bumperEventList.append(perceptionBumper)
-    rate = rospy.Rate(1) # 1 Hz
-    # Do stuff, maybe in a while loop
     print 'Decision taking started...'
-    print(perceptionBumper)
-    fact = str(perceptionBumper).replace('"', "'")
-    print 'Fact: ' + fact
-    pyDatalog.assert_fact('perceptionBumper', fact) #  Asserts a new fact
-    print 'New knowledge taken...'
-    rospy.loginfo('west: {}, north: {}, est: {}'.format(west, north, east))
-    try:
-        out = pyDatalog.ask('takeDecision(D)')
-    except:  # If Prolog doesn't work (maybe because it can't receive data from sensors) the robot has to stay
-        out = []
-    # print(out)  # test
-    if len(out) > 0 :  # If we can take more than one decision, we take the 1st one
-        # print(out[0]['D'])  # Test
-        toDo = out[0]['D']
-    else:
-        toDo = 'Stay'
+    bumperFact = str(perceptionBumper).replace('"', "'")
+    print 'Fact: ' + bumperFact
+    # Put data on query file
+    outFile = open("query.txt", "w")
+    outFile.write(bumperFact + '\n')
+    outFile.close()
+    waitForDevil()
+    print 'Devil wrote back'
+    response = open('response.txt')
+    toDo = response.readline()
+    response.close()
+    print 'Davil said: ' + toDo
     if toDo == 'GoStraight':
         kobukiDecisionVelocity.linear.x = 0.15 # Go forward at 0.15 m/s
         kobukiDecisionVelocity.linear.y = 0.0
@@ -233,10 +230,9 @@ def speecunialityCallbackDatalog(kobukiStatus):
         kobukiDecisionVelocity.angular.z = 0.0
     pubKobukiVelocity.publish(kobukiDecisionVelocity)
     rospy.loginfo('decisionVelocity.x: {}, decisionVelocity.y: {}, decisionVelocity.z: {}'.format(kobukiDecisionVelocity.linear.x , kobukiDecisionVelocity.linear.y, kobukiDecisionVelocity.angular.z))
-    pyDatalog.retract_fact('perceptionBumper', fact)
-    print 'Previous knowledge retracted...'
-    rate.sleep() # Sleeps for 1/rate sec
     print 'Thinking completed'
+    os.remove('response.txt')
+    print 'Previous knowledge retracted...'
     
 def think():
     # learn('behaviour.pl')  # Pyswip is not compatible
