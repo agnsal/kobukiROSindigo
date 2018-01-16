@@ -65,7 +65,8 @@ def patientResponse():
 
 def eternity():
     print('Loop started')
-    patientQuery()
+    while(True):
+        patientQuery()
 
         # Keep data from file
         fact = []
