@@ -13,6 +13,7 @@ an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express o
 See the License for the specific language governing permissions and limitations under the License
 '''
 
+import os
 from pyDatalog import pyEngine
 from pyDatalog import pyDatalog
 import logging
@@ -55,6 +56,7 @@ def eternity():
         line = inFile.readline()
         factList = ast.literal_eval(line)
         inFile.close()
+        os.remove('query.txt')
 
         print('FactList: ', factList)
         + perceptionBumper(factList) #  Asserts a new fact
