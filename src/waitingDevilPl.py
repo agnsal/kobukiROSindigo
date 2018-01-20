@@ -48,7 +48,7 @@ def eternity():
         fact = []
         line = inFile.readline()
         try:
-            factList = ast.literal_eval(line).replace('True', "'True'").replace('False', "'False'")
+            factList = ast.literal_eval(line.replace('True', "'True'").replace('False', "'False'"))
             inFile.close()
             fact = 'perceptionBumper(' + str(factList) + ')'
             print('Fact: ', fact)
