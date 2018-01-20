@@ -24,7 +24,7 @@ logging.basicConfig(level=logging.INFO)
 prologEngine = Prolog() # The engine given by Pyswip SWI Prolog library
 
 print("Learning started...")
-prologEngine.consult(prologFilePath)
+prologEngine.consult(behaviourFilePath)
 print("Learning finished")
 
 
