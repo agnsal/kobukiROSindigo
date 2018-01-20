@@ -34,7 +34,9 @@ hasValue('bumperE', E) <= perceptionBumper([X, Y, ['bumperE', E]])
 
 takeDecision('TurnSouth') <= hasValue('bumperN', 'True') & hasValue('bumperW', 'True') & hasValue('bumperE', 'True')
 takeDecision('GoStraight') <= hasValue('bumperN', 'False') & hasValue('bumperW', 'False') & hasValue('bumperE', 'False')
+takeDecision('TurnWest') <= hasValue('bumperN', 'True') & hasValue('bumperW', 'False')
 takeDecision('TurnWest') <= hasValue('bumperE', 'True') & hasValue('bumperW', 'False')
+takeDecision('TurnEast') <= hasValue('bumperN', 'True') & hasValue('bumperE', 'False')
 takeDecision('TurnEast') <= hasValue('bumperW', 'True') & hasValue('bumperE', 'False')
 
 # rules = open(behaviourFilePath).read()
