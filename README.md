@@ -7,7 +7,7 @@ Actually, I developed the thinking process in the daemon Python3 programs waitin
 You can decide not to use any daemon program and to use pure Python2 by choosing another one of the callbacks that are available in thinkNode.py code (instead of logCallback).
 
 
-![](headerDiagram.png)
+![](nodeDiagram.png)
 
 It is made of 3 ROS nodes:
 - senseNode.py: Takes data from robot sensors.
