@@ -118,7 +118,7 @@ def waitForDevilReady():
     
 # The following callback uses Datalog or Prolog Daemon Python3 program.
 # If you don't want to use Datalog or Prolog, use decisionCallbackRandomPy or decisionCallbackPy instead.
-def logCallbackDatalog(kobukiStatus):
+def logCallback(kobukiStatus):
     print 'Decision taking started...'
     west = kobukiStatus.bumperW
     north = kobukiStatus.bumperN
@@ -166,7 +166,7 @@ def logCallbackDatalog(kobukiStatus):
     
 def think():
     rospy.init_node('think')
-    rospy.Subscriber("/kobuki_status", Status, logCallbackDatalog)
+    rospy.Subscriber("/kobuki_status", Status, logCallback)
     rospy.spin()
 
 if __name__ == '__main__':
