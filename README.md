@@ -1,20 +1,21 @@
 # kobukiROSindigo
-> A kobuki robot ROS package (for both Gazebo and physical robot) that uses Datalog and/or SWI-Prolog modules to take decisions.
+> A kobuki robot ROS package (for both Gazebo and physical robot) that uses Datalog and SWI-Prolog modules to take decisions about the action to perform, given bumper sernsor data.
 
 
-The robot goes around, detects obstacles thanks to bumper sensors and shows what it sees from its point of view. \
-Actually, I developed the thinking process in the daemon Python3 program waitingDevil.py, that uses PyDatalog library. \
-You can use SWI-Prolog via PySwip library in a similar way, or yoy can make programs to solve more complex tasks (you can see there a Pyswip example in the commented code that you can expand).
+The robot goes around, detects obstacles, thanks to bumper sensors, and shows what it sees from its point of view. \
+Actually, I developed the thinking process in the daemon Python3 programs waitingDevil.py and waitingDevilPl.py, that use  Datalog (thanks to PyDatalog library) and SWI-Prolog (thanks to PySWIP library) respectively. \
+You can decide not to use any daemon program and to use pure Python2 by choosing another one of the callbacks that are available in thinkNode.py code (instead of logCallback).
 
 
 ![](headerDiagram.png)
 
 It is made of 3 ROS nodes:
-- SenseNode.py: Takes data from robot sensors.
-- ThinkNode.py: Takes SenseNode.py results and uses bumper data to take a decision about velocity.
-- ActNode.py: Takes ThinkNode.py results and gives commands to the robot motors.
-And a Python3 program:
-- WaitingDevil.py: Makes reasonings using Datalog (communicates with ThinkNode.py).
+- senseNode.py: Takes data from robot sensors.
+- thinkNode.py: Takes SenseNode.py results and uses bumper data to take a decision about velocity.
+- actNode.py: Takes ThinkNode.py results and gives commands to the robot motors.
+And 2 Python3 program:
+- waitingDevil.py: Makes reasonings using Datalog (communicates with thinkNode.py).
+- waitingDevilPl.py: Makes reasonings using SWI-Prolog (communicates with thinkNode.py).
 
 ## Instructions
 1. (OPTIONAL, do this if you are going to use SWI-Prolog and you don't have SWI-Prolog installed or if you have problems with Pyswip integration) Install SWI-Prolog with shared library enabled:
@@ -92,7 +93,7 @@ chmod +x waitingDevil.py
 9. To run the scripts (use a terminal window for each one) on the physical robot or on the simulation robot (that has to be launched in a separated terminal window using the command ``` roslaunch turtlebot_gazebo turtlebot_world.launch ```):
 ```sh
 cd ~/catkin_ws/src/kobukiROSindigo/src
-python3 waitingDevil.py
+python3 waitingDevil.py  # (to use Datalog solver), or python3 waitingDevilPl.py (to use SWI-Prolog solver)
 rosrun kobukiROSindigo thinkNode.py
 rosrun kobukiROSindigo senseNode.py
 rosrun kobukiROSindigo actNode.py
