@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and limitations 
 
 import rospy
 import math
+import os
 import random
 from geometry_msgs.msg import Twist
 from kobukiROSindigo.msg import Status
