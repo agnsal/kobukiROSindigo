@@ -48,9 +48,9 @@ def eternity():
         fact = []
         line = inFile.readline()
         try:
-            factList = ast.literal_eval(line)
+            factList = ast.literal_eval(line).replace('True', "'True'").replace('False', "'False'")
             inFile.close()
-            fact = 'perceptionBumper(' + str(factList) + ')'.replace("True", "'True'").replace("False", "'False'").replace('"', "'")
+            fact = 'perceptionBumper(' + str(factList) + ')'
             print('Fact: ', fact)
             prologEngine.assertz(fact)
             print("New knowledge taken")
