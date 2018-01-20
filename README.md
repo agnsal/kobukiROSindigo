@@ -89,6 +89,7 @@ chmod +x senseNode.py
 chmod +x thinkNode.py
 chmod +x actNode.py 
 chmod +x waitingDevil.py
+chmod +x waitingDevilPl.py
 ```
 9. To run the scripts (use a terminal window for each one) on the physical robot or on the simulation robot (that has to be launched in a separated terminal window using the command ``` roslaunch turtlebot_gazebo turtlebot_world.launch ```):
 ```sh
