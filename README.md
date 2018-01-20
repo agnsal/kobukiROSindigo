@@ -38,7 +38,7 @@ sudo ln -s /usr/lib/pl-5.6.34/lib/i686-linux/libpl.so.5.6.34 /usr/lib/libpl.so
 cd ../../..
 git clone https://github.com/yuce/pyswip.git
 cd pyswip
-python setup.py install
+python3 setup.py install
 pip3 install pyDatalog
 ```
 3. If you don't have a  catkin workspace, create one:
