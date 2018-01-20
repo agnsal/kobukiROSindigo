@@ -57,7 +57,7 @@ def eternity():
             print("Taking a decision...")
             response = list(prologEngine.query('takeDecision(D)'))
             print("Decision taken")
-            # print(response)
+            print(response)
             result = str(response[0]['D'])
             print('Result: ', result)
             prologEngine.retractall('perceptionBumper(_)')
